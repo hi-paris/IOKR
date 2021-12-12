@@ -1,0 +1,49 @@
+Timer unit: 1e-06 s
+
+Total time: 15.2425 s
+File: load_data.py
+Function: load_bibtex at line 29
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+    29                                           @profile
+    30                                           def load_bibtex(dir_path: str):
+    31                                               """
+    32                                               Load the bibtex dataset.
+    33                                               __author__ = "Michael Gygli, ETH Zurich"
+    34                                               from https://github.com/gyglim/dvn/blob/master/mlc_datasets/__init__.py
+    35                                           
+    36                                               Parameters
+    37                                               ----------
+    38                                               dir_path : string - containing location of bibtex.arff
+    39                                           
+    40                                           
+    41                                               Returns
+    42                                               -------
+    43                                               X : np.array
+    44                                                   Explanatory variables - N * 1836 array variables in one vector - e.g. 'dependent', 'always'
+    45                                           
+    46                                               Y : np.array
+    47                                                   Target variables - N * 159 array variables in one vector - e.g. 'TAG_system', 'TAG_social_nets'
+    48                                           
+    49                                               X_txt : list
+    50                                                       Explanatory variables - N * 1836 list variables in one vector - e.g. 'dependent', 'always'
+    51                                           
+    52                                               Y_txt : list
+    53                                                       Target variables - N * 159 list variables in one vector - e.g. 'TAG_system', 'TAG_social_nets'
+    54                                           
+    55                                               """
+    56                                           
+    57         1          9.0      9.0      0.0      feature_idx = 1836
+    58                                           
+    59         1   14589083.0 14589083.0     95.7      dataset = arff.load(open('%s/bibtex.arff' % dir_path), "r")
+    60         1     653046.0 653046.0      4.3      data = np.array(dataset['data'], np.int64)
+    61                                           
+    62         1          8.0      8.0      0.0      X = data[:, 0:feature_idx]
+    63         1          1.0      1.0      0.0      Y = data[:, feature_idx:]
+    64                                           
+    65         1        289.0    289.0      0.0      X_txt = [t[0] for t in dataset['attributes'][:feature_idx]]
+    66         1         26.0     26.0      0.0      Y_txt = [t[0] for t in dataset['attributes'][feature_idx:]]
+    67                                           
+    68         1          1.0      1.0      0.0      return X, Y, X_txt, Y_txt
+

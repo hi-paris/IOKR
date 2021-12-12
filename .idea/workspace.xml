@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e82cd13-8c18-45c3-b85d-93848c38642e" name="Default Changelist" comment="adding setup file">
+      <change afterPath="$PROJECT_DIR$/IOKR/data/data_load_profile_output.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/IOKR/data/load_data.py.lprof" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/IOKR/data/load_data_profile_output.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IOKR/data/dev.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IOKR/data/test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IOKR/data/data_load.py" beforeDir="false" afterPath="$PROJECT_DIR$/IOKR/data/load_data.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +40,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
@@ -71,7 +74,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="dev" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+    <configuration name="load_data" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="IOKR" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -83,7 +86,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/IOKR/data/dev.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/IOKR/data/load_data.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -106,32 +109,39 @@
     </task>
     <servers />
   </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="184" y="112" width="1071" height="696" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1639302255289">
+    <state x="184" y="112" width="1071" height="696" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1639323633315">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="184" y="112" width="1071" height="696" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900/1440.-137.1920.1080@0.0.1440.900" timestamp="1638197859836" />
-    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1639302255289" />
+    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1639323633315" />
+    <state x="420" y="260" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1639324092202">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="420" y="260" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1440.900@0.0.1440.900" timestamp="1639324092202" />
     <state x="353" y="54" key="CommitChangelistDialog2" timestamp="1638184284409">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="353" y="54" key="CommitChangelistDialog2/0.0.1440.900/1440.-137.1920.1080@0.0.1440.900" timestamp="1638184284409" />
-    <state width="1419" height="245" key="GridCell.Tab.0.bottom" timestamp="1639322925779">
+    <state width="1419" height="245" key="GridCell.Tab.0.bottom" timestamp="1639323952375">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1419" height="245" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1639322925779" />
-    <state width="1419" height="245" key="GridCell.Tab.0.center" timestamp="1639322925778">
+    <state width="1419" height="245" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1639323952375" />
+    <state width="1419" height="245" key="GridCell.Tab.0.center" timestamp="1639323952373">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1419" height="245" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1639322925778" />
-    <state width="1419" height="245" key="GridCell.Tab.0.left" timestamp="1639322925777">
+    <state width="1419" height="245" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1639323952373" />
+    <state width="1419" height="245" key="GridCell.Tab.0.left" timestamp="1639323952372">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1419" height="245" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1639322925777" />
-    <state width="1419" height="245" key="GridCell.Tab.0.right" timestamp="1639322925779">
+    <state width="1419" height="245" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1639323952372" />
+    <state width="1419" height="245" key="GridCell.Tab.0.right" timestamp="1639323952374">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1419" height="245" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1639322925779" />
+    <state width="1419" height="245" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1639323952374" />
     <state x="229" y="89" key="SettingsEditor" timestamp="1639321526351">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
