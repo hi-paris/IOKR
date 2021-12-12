@@ -2,16 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e82cd13-8c18-45c3-b85d-93848c38642e" name="Default Changelist" comment="adding setup file">
-      <change afterPath="$PROJECT_DIR$/IOKR/data/dev.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/IOKR/data/test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IOKR/data/bibtex/bibtex-test.arff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IOKR/data/bibtex/bibtex-train.arff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IOKR/data/bibtex/bibtex.arff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IOKR/data/bibtex/bibtex.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IOKR/data/data_load.py" beforeDir="false" afterPath="$PROJECT_DIR$/IOKR/data/data_load.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IOKR/model/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/IOKR/model/model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IOKR/data/dev.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IOKR/data/test.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -148,10 +141,10 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state width="720" height="450" key="XDebugger.FullValuePopup/0.0.1440.900@0.0.1440.900" timestamp="1639322415858" />
-    <state x="399" y="266" key="com.intellij.ide.util.TipDialog" timestamp="1639318436892">
+    <state x="399" y="266" key="com.intellij.ide.util.TipDialog" timestamp="1639322948737">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="399" y="266" key="com.intellij.ide.util.TipDialog/0.0.1440.900@0.0.1440.900" timestamp="1639318436892" />
+    <state x="399" y="266" key="com.intellij.ide.util.TipDialog/0.0.1440.900@0.0.1440.900" timestamp="1639322948737" />
     <state x="399" y="269" key="com.intellij.ide.util.TipDialog/0.23.1440.831/1440.-114.1920.1057@0.23.1440.831" timestamp="1638183633842" />
     <state x="385" y="179" key="search.everywhere.popup" timestamp="1638184118720">
       <screen x="0" y="23" width="1440" height="832" />
