@@ -9,7 +9,7 @@ Refs:
 
 In this section, you are going to implement and test an elegant method for structured prediction called **Input Output Kernel Regression (IOKR)**. This method belongs to the family of surrogate methods for structured prediction (cf. lectures).
 
-**Kernel methods (quick reminder).** A kernel over a space <sub>Z</sub> is a map $k : \mathcal{Z} \times \mathcal{Z} \rightarrow \mathbb{R}$ that can be written:
+**Kernel methods (quick reminder).** A kernel over a space <sub>&Z;</sub> is a map $k : \mathcal{Z} \times \mathcal{Z} \rightarrow \mathbb{R}$ that can be written:
 
 $$k(z, z') = \langle \phi(z),\, \phi(z')\rangle_{\mathcal{G}}$$
 
