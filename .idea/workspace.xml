@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e82cd13-8c18-45c3-b85d-93848c38642e" name="Default Changelist" comment="adding setup file">
-      <change afterPath="$PROJECT_DIR$/IOKR/data/data_load_profile_output.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/IOKR/data/load_data.py.lprof" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/IOKR/data/load_data_profile_output.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IOKR/data/data_load.py" beforeDir="false" afterPath="$PROJECT_DIR$/IOKR/data/load_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IOKR/data/load_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/IOKR/data/load_data.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
