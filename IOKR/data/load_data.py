@@ -1,4 +1,3 @@
-
 # !/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
@@ -15,7 +14,6 @@ from sklearn.model_selection import train_test_split
 from line_profiler import LineProfiler
 import random
 
-
 ## bibtex
 ### files (sparse): Train and test sets along with their union and the XML header [bibtex.rar]
 ### source: I. Katakis, G. Tsoumakas, I. Vlahavas, "Multilabel Text Classification for Automated Tag Suggestion",
@@ -26,7 +24,9 @@ import random
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
-#@profile
+
+# @profile
+
 def load_bibtex(dir_path: str):
     """
     Load the bibtex dataset.
@@ -67,18 +67,17 @@ def load_bibtex(dir_path: str):
 
     return X, Y, X_txt, Y_txt
 
-
 ####### Use Case
-#path = "../data/bibtex/"
-#X, Y, _, _ = load_bibtex(path)
+# path = "../data/bibtex/"
+# X, Y, _, _ = load_bibtex(path)
 
-#X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.33, random_state=42)
+# X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.33, random_state=42)
 
 
-#n_tr = X_train.shape[0]
-#n_te = X_test.shape[0]
-#input_dim = X_train.shape[1]
-#label_dim = Y_train.shape[1]
+# n_tr = X_train.shape[0]
+# n_te = X_test.shape[0]
+# input_dim = X_train.shape[1]
+# label_dim = Y_train.shape[1]
 
 # print(f'Train set size = {n_tr}')
 # print(f'Test set size = {n_te}')
@@ -86,5 +85,3 @@ def load_bibtex(dir_path: str):
 # print(f'Output dim. = {label_dim}')
 # print(len(Y_test))
 # print(len(Y_train))
-
-

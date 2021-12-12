@@ -1,4 +1,25 @@
 # Implementation
+import time
+from sklearn.model_selection import KFold
+from sklearn.metrics.pairwise import rbf_kernel
+import sklearn.metrics
+import numpy as np
+import pandas as pd
+from IOKR.data.load_data import load_bibtex
+
+# insert at position 1 in the path, as 0 is the path of this file.
+
+
+
+#path = "../data/bibtex/"
+#X, Y, _, _ = load_bibtex(path)
+#print(X)
+#print(Y)
+
+
+
+
+
 
 class IOKR:
 
@@ -37,3 +58,5 @@ class IOKR:
             print(f'Decoding time: {time.time() - t0} in s')
 
         return self.Y_tr[idx_pred].copy()
+
+

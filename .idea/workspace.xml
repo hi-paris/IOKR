@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e82cd13-8c18-45c3-b85d-93848c38642e" name="Default Changelist" comment="adding setup file">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IOKR/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/IOKR/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IOKR/data/__inti__.py" beforeDir="false" afterPath="$PROJECT_DIR$/IOKR/data/__inti__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IOKR/data/load_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/IOKR/data/load_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IOKR/model/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/IOKR/model/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IOKR/model/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/IOKR/model/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,27 +128,27 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="353" y="54" key="CommitChangelistDialog2/0.0.1440.900/1440.-137.1920.1080@0.0.1440.900" timestamp="1638184284409" />
-    <state width="1419" height="245" key="GridCell.Tab.0.bottom" timestamp="1639323952375">
+    <state width="1419" height="245" key="GridCell.Tab.0.bottom" timestamp="1639331810366">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1419" height="245" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1639323952375" />
-    <state width="1419" height="245" key="GridCell.Tab.0.center" timestamp="1639323952373">
+    <state width="1419" height="245" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1639331810366" />
+    <state width="1419" height="245" key="GridCell.Tab.0.center" timestamp="1639331810365">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1419" height="245" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1639323952373" />
-    <state width="1419" height="245" key="GridCell.Tab.0.left" timestamp="1639323952372">
+    <state width="1419" height="245" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1639331810365" />
+    <state width="1419" height="245" key="GridCell.Tab.0.left" timestamp="1639331810364">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1419" height="245" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1639323952372" />
-    <state width="1419" height="245" key="GridCell.Tab.0.right" timestamp="1639323952374">
+    <state width="1419" height="245" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1639331810364" />
+    <state width="1419" height="245" key="GridCell.Tab.0.right" timestamp="1639331810365">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1419" height="245" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1639323952374" />
-    <state x="229" y="89" key="SettingsEditor" timestamp="1639321526351">
+    <state width="1419" height="245" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1639331810365" />
+    <state x="229" y="89" key="SettingsEditor" timestamp="1639332375528">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="229" y="89" key="SettingsEditor/0.0.1440.900/1440.-137.1920.1080@0.0.1440.900" timestamp="1638184640844" />
-    <state x="229" y="89" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1639321526351" />
+    <state x="229" y="89" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1639332375528" />
     <state width="720" height="450" key="XDebugger.FullValuePopup" timestamp="1639322415858">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
