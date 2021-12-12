@@ -1,110 +1,84 @@
 
-   
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 Created on December 12, 2021
 @author: Gaëtan Brison <gaetan.brison@ip-paris.fr>
 """
 
-def load_wine(*, return_X_y=False, as_frame=False):
-    """Load and return the wine dataset (classification).
-    .. versionadded:: 0.18
-    The wine dataset is a classic and very easy multi-class classification
-    dataset.
-    =================   ==============
-    Classes                          3
-    Samples per class        [59,71,48]
-    Samples total                  178
-    Dimensionality                  13
-    Features            real, positive
-    =================   ==============
-    Read more in the :ref:`User Guide <wine_dataset>`.
-    Parameters
-    ----------
-    return_X_y : bool, default=False
-        If True, returns ``(data, target)`` instead of a Bunch object.
-        See below for more information about the `data` and `target` object.
-    as_frame : bool, default=False
-        If True, the data is a pandas DataFrame including columns with
-        appropriate dtypes (numeric). The target is
-        a pandas DataFrame or Series depending on the number of target columns.
-        If `return_X_y` is True, then (`data`, `target`) will be pandas
-        DataFrames or Series as described below.
-        .. versionadded:: 0.23
+import arff
+import os
+import numpy as np
+import pandas as pd
+from numpy.random import RandomState
+from sklearn.model_selection import train_test_split
+from line_profiler import LineProfiler
+import random
+
+
+## bibtex
+### files (sparse): Train and test sets along with their union and the XML header [bibtex.rar]
+### source: I. Katakis, G. Tsoumakas, I. Vlahavas, "Multilabel Text Classification for Automated Tag Suggestion",
+### Proceedings of the ECML/PKDD 2008 Discovery Challenge, Antwerp, Belgium, 2008.
+
+
+# split dataset using
+
+dir_path = os.path.dirname(os.path.realpath(__file__))
+
+
+def load_bibtex(dir_path: str):
+    """
+    Load the bibtex dataset.
+    __author__ = "Michael Gygli, ETH Zurich"
+    from https://github.com/gyglim/dvn/blob/master/mlc_datasets/__init__.py
+    number of labels ("tags") = 159
+    dimension of inputs = 1836
     Returns
     -------
-    data : :class:`~sklearn.utils.Bunch`
-        Dictionary-like object, with the following attributes.
-        data : {ndarray, dataframe} of shape (178, 13)
-            The data matrix. If `as_frame=True`, `data` will be a pandas
-            DataFrame.
-        target: {ndarray, Series} of shape (178,)
-            The classification target. If `as_frame=True`, `target` will be
-            a pandas Series.
-        feature_names: list
-            The names of the dataset columns.
-        target_names: list
-            The names of target classes.
-        frame: DataFrame of shape (178, 14)
-            Only present when `as_frame=True`. DataFrame with `data` and
-            `target`.
-            .. versionadded:: 0.23
-        DESCR: str
-            The full description of the dataset.
-    (data, target) : tuple if ``return_X_y`` is True
-    The copy of UCI ML Wine Data Set dataset is downloaded and modified to fit
-    standard format from:
-    https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data
-    Examples
-    --------
-    Let's say you are interested in the samples 10, 80, and 140, and want to
-    know their class name.
-    >>> from sklearn.datasets import load_wine
-    >>> data = load_wine()
-    >>> data.target[[10, 80, 140]]
-    array([0, 1, 2])
-    >>> list(data.target_names)
-    ['class_0', 'class_1', 'class_2']
+    txt_labels (list)
+        the 159 tags, e.g. 'TAG_system', 'TAG_social_nets'
+    txt_inputs (list)
+        the 1836 attribute words, e.g. 'dependent', 'always'
+    labels (np.array)
+        N x 159 array in one hot vector format
+    inputs (np.array)
+        N x 1839 array in one hot vector format
     """
+    feature_idx = 1836
 
-    data, target, target_names, fdescr = load_csv_data(
-        data_file_name="wine_data.csv", descr_file_name="wine_data.rst"
-    )
+    dataset = arff.load(open('%s/bibtex.arff' % dir_path), "r")
+    data = np.array(dataset['data'], np.int64)
 
-    feature_names = [
-        "alcohol",
-        "malic_acid",
-        "ash",
-        "alcalinity_of_ash",
-        "magnesium",
-        "total_phenols",
-        "flavanoids",
-        "nonflavanoid_phenols",
-        "proanthocyanins",
-        "color_intensity",
-        "hue",
-        "od280/od315_of_diluted_wines",
-        "proline",
-    ]
+    X = data[:, 0:feature_idx]
+    Y = data[:, feature_idx:]
 
-    frame = None
-    target_columns = [
-        "target",
-    ]
-    if as_frame:
-        frame, data, target = _convert_data_dataframe(
-            "load_wine", data, target, feature_names, target_columns
-        )
+    X_txt = [t[0] for t in dataset['attributes'][:feature_idx]]
+    Y_txt = [t[0] for t in dataset['attributes'][feature_idx:]]
 
-    if return_X_y:
-        return data, target
+    return X, Y, X_txt, Y_txt
 
-    return Bunch(
-        data=data,
-        target=target,
-        frame=frame,
-        target_names=target_names,
-        DESCR=fdescr,
-        feature_names=feature_names,
-    )
+
+
+path = "../data/bibtex/"
+X, Y, _, _ = load_bibtex(path)
+
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.33, random_state=42)
+
+
+n_tr = X_train.shape[0]
+n_te = X_test.shape[0]
+input_dim = X_train.shape[1]
+label_dim = Y_train.shape[1]
+
+print(f'Train set size = {n_tr}')
+print(f'Test set size = {n_te}')
+print(f'Input dim. = {input_dim}')
+print(f'Output dim. = {label_dim}')
+print(len(Y_test))
+print(len(Y_train))
+
+
+lp = LineProfiler()
+lp_wrapper = lp(load_bibtex(dir_path))
+print(lp.print_stats())
