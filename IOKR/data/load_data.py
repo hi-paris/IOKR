@@ -21,8 +21,8 @@ import random
 
 
 # split dataset using
-
-dir_path = os.path.dirname(os.path.realpath(__file__))
+#
+# dir_path = os.path.dirname(os.path.realpath(__file__))
 
 
 # @profile
@@ -56,7 +56,7 @@ def load_bibtex(dir_path: str):
 
     feature_idx = 1836
 
-    dataset = arff.load(open('%s/bibtex.arff' % dir_path), "r")
+    dataset = arff.load(open(dir_path+"/bibtex.arff"), "r")
     data = np.array(dataset['data'], np.int64)
 
     X = data[:, 0:feature_idx]
@@ -67,18 +67,18 @@ def load_bibtex(dir_path: str):
 
     return X, Y, X_txt, Y_txt
 
-####### Use Case
+# ####### Use Case
 # path = "../data/bibtex/"
 # X, Y, _, _ = load_bibtex(path)
-
+#
 # X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.33, random_state=42)
-
-
+#
+#
 # n_tr = X_train.shape[0]
 # n_te = X_test.shape[0]
 # input_dim = X_train.shape[1]
 # label_dim = Y_train.shape[1]
-
+#
 # print(f'Train set size = {n_tr}')
 # print(f'Test set size = {n_te}')
 # print(f'Input dim. = {input_dim}')
