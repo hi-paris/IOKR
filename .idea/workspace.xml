@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5e82cd13-8c18-45c3-b85d-93848c38642e" name="Default Changelist" comment="" />
+    <list default="true" id="5e82cd13-8c18-45c3-b85d-93848c38642e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/IOKR/tests/data/test_load_data.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/IOKR/tests/model/test_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IOKR.egg-info/SOURCES.txt" beforeDir="false" afterPath="$PROJECT_DIR$/IOKR.egg-info/SOURCES.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IOKR.egg-info/dependency_links.txt" beforeDir="false" afterPath="$PROJECT_DIR$/IOKR.egg-info/dependency_links.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IOKR.egg-info/requires.txt" beforeDir="false" afterPath="$PROJECT_DIR$/IOKR.egg-info/requires.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IOKR.egg-info/top_level.txt" beforeDir="false" afterPath="$PROJECT_DIR$/IOKR.egg-info/top_level.txt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,12 +38,12 @@
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
@@ -46,7 +54,7 @@
       <recent name="$PROJECT_DIR$/IOKR/visualization" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.load_data">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="IOKR" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -137,6 +145,7 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -164,6 +173,17 @@
     </task>
     <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
