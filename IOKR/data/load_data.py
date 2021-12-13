@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on December 12, 2021
-@author: Gaëtan Brison <gaetan.brison@ip-paris.fr>
 """
 
 import arff

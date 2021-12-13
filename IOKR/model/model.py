@@ -18,10 +18,30 @@ from line_profiler import LineProfiler
 #dir_path = os.path.dirname(os.path.realpath(__file__))
 #dataset = arff.load(open('/Users/gaetanbrison/Documents/GitHub/IOKR/IOKR/data/bibtex/bibtex.arff'), "r")
 
+"""
+Created on December 12, 2021
+"""
+
 
 class IOKR:
+    """
+    Class used to apply Input and Output Kernel Regression
+    """
 #    @profile
     def __init__(self):
+        """
+        Initialization of the below parameters.
+
+        Parameters
+        ----------
+        X_train :  sparse matrix - containing explanatory variables of the train set
+        Y_train: sparse matrix - containing target variable of the train set
+        Ky: output scalar kernel
+        M: gram matrix on training set
+        verbose: binary - display more parameters
+        linear:
+
+        """
         self.X_train = None
         self.Y_train = None
         self.Ky = None
@@ -32,6 +52,10 @@ class IOKR:
 
 #    @profile
     def fit(self, X, Y, L, sx, sy):
+        """
+        Model Fitting
+
+        """
 
         t0 = time.time()
         self.X_train = X
@@ -49,6 +73,11 @@ class IOKR:
 
 #    @profile
     def predict(self, X_test):
+
+        """
+        Model Prediction
+
+        """
 
         t0 = time.time()
         Kx = rbf_kernel(self.X_train, X_test, gamma=1 / (2 * self.sx))
