@@ -68,7 +68,7 @@ def load_bibtex(dir_path: str):
     return X, Y, X_txt, Y_txt
 
 # ####### Use Case
-# path = "../data/bibtex/"
+# path = "../data/bibtex"
 # X, Y, _, _ = load_bibtex(path)
 #
 # X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.33, random_state=42)
