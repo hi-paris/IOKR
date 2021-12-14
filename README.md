@@ -1,6 +1,8 @@
 # IOKR
 
 ![Build Status](https://github.com/hi-paris/IOKR/workflows/pytesting/badge.svg)
+[![Coverage Status](https://coveralls.io/repos/github/hi-paris/IOKR/badge.svg?branch=main)](https://coveralls.io/github/hi-paris/IOKR?branch=main)
+[![Build Status](https://app.travis-ci.com/hi-paris/IOKR.svg?branch=main)](https://app.travis-ci.com/hi-paris/IOKR)
 
 Refs:
 - Brouard, C., d'Alché-Buc, F., Szafranski, M. Semi-supervised Penalized Output Kernel Regression for Link Prediction, ICML 2011: 593-600, (2011).
