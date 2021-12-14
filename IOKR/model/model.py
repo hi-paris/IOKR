@@ -48,7 +48,7 @@ class IOKR:
         self.sy = None
         self.M = None
         self.verbose = 0
-        self.linear = False
+        self.output_kernel = None
 
 #    @profile
     def fit(self, X, Y, L, sx, sy):
@@ -64,29 +64,40 @@ class IOKR:
         n = Kx.shape[0]
         self.M = np.linalg.inv(Kx + n * L * np.eye(n))
         self.Y_train = Y
-        if self.linear:
-            self.Ky = Y.dot(Y.T)
-        else:
-            self.Ky = rbf_kernel(Y, Y, gamma=1 / (2 * sy))
+        
         if self.verbose > 0:
             print(f'Fitting time: {time.time() - t0} in s')
+            
+    def Alpha_train(self, X_test):
+        
+        Kx = rbf_kernel(self.X_train, X_test, gamma=1 / (2 * self.sx))
+        A = self.M.dot(Kx)
+        
+        return A
 
 #    @profile
-    def predict(self, X_test):
+    def predict(self, X_test, Y_candidates):
 
         """
         Model Prediction
 
         """
+        
 
         t0 = time.time()
-        Kx = rbf_kernel(self.X_train, X_test, gamma=1 / (2 * self.sx))
-        scores = self.Ky.dot(self.M).dot(Kx)
+        
+        A = self.Alpha_train(X_test)
+        Ky = self.output_kernel(self.Y, Y_candidates)
+        scores = self.Ky.dot(A)
+        
         idx_pred = np.argmax(scores, axis=0)
+        
         if self.verbose > 0:
             print(f'Decoding time: {time.time() - t0} in s')
-
-        return self.Y_train[idx_pred].copy()
+            
+        Y_pred = Y_candidates[idx_pred]
+        
+        return Y_pred
 
 
 
