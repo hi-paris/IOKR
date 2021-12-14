@@ -48,7 +48,7 @@ pip install IOKR
 
 Once this is done you should see the following message
 
-![Capture d’écran 2021-12-13 à 01.30.55.png](How%20to%20Run%20IOKR%20Locally%20a452af54962b45fc83bdd1a9b8174874/Capture_decran_2021-12-13_a_01.30.55.png)
+![alt text](images/package-iokr.png)
 
 ## 03 Test packages
 
@@ -80,7 +80,7 @@ f1_test = f1_score(Y_pred_test, Y_test, average='samples')
 
 You should get something like that:
 
-![Capture d’écran 2021-12-13 à 09.16.18.png](How%20to%20Run%20IOKR%20Locally%20a452af54962b45fc83bdd1a9b8174874/Capture_decran_2021-12-13_a_09.16.18.png)
+![alt text](images/output-iokr.png)
 
 <aside>
 ✅ **Great Job !**
