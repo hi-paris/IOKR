@@ -1,5 +1,7 @@
 # IOKR
 
+![Build Status](https://github.com/hi-paris/IOKR/workflows/pytesting/badge.svg)
+
 Refs:
 - Brouard, C., d'Alché-Buc, F., Szafranski, M. Semi-supervised Penalized Output Kernel Regression for Link Prediction, ICML 2011: 593-600, (2011).
 - Brouard, C., Szafranski, M., d'Alché-Buc, F.Input Output Kernel Regression: Supervised and Semi-Supervised Structured Output Prediction with Operator-Valued Kernels. J. Mach. Learn. Res. 17: 176:1-176:48 (2016).
