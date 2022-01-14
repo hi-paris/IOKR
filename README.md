@@ -40,6 +40,7 @@ python -m pip install --upgrade pip
 --------------------------------
 ### Upgrade setuptools to run setup file
 pip install --upgrade setuptools
+setup.py install
 
 --------------------------------
 ### Create the local package
@@ -56,18 +57,19 @@ Once this is done you should see the following message
 
 ## 03 Test packages
 
-You can run the following commands in your python console in Pycharm
+You can run the following commands in your python console in Pycharm (or run validation_IOKR_install.py)
 
 ```python
-from IOKR.data.data_load import load_bibtex
+from IOKR.data.load_data import load_bibtex
 from IOKR.model.model import IOKR
 from sklearn.model_selection import train_test_split
+from IOKR.data.load_data import load_bibtex
+from sklearn.metrics import f1_score
 
 path = "IOKR/data/bibtex"
 X, Y, _, _ = load_bibtex(path)
 
-X_train, X_test, Y_train, Y_test = train_test_split(X, Y,
-	 test_size=0.33, random_state=42)
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.33, random_state=42)
 
 clf = IOKR()
 clf.verbose = 1
@@ -76,10 +78,11 @@ sx = 1000
 sy = 10
 
 clf.fit(X=X_train, Y=Y_train, L=L, sx=sx, sy=sy)
-Y_pred_train = clf.predict(X_train=X_train)
+Y_pred_train = clf.predict(X_test=X_train)
 Y_pred_test = clf.predict(X_test=X_test)
 f1_train = f1_score(Y_pred_train, Y_train, average='samples')
 f1_test = f1_score(Y_pred_test, Y_test, average='samples')
+print("Train f1 score:", f1_train,"/", "Test f1 score:", f1_test)
 ```
 
 You should get something like that:
