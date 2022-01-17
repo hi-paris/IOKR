@@ -21,7 +21,7 @@ def fitted_IOKR(X, y, L=1e-5, sx=1000, sy=10):
     clf = iokr()
     clf.verbose = 1
     clf.fit(X=X_train, Y=Y_train, L=L, sx=sx, sy=sy)
-    Y_pred_train = clf.predict(X_test=X_train)
+    Y_pred_train = clf.predict(X_train=X_train)
     Y_pred_test = clf.predict(X_test=X_test)
     f1_train = f1_score(Y_pred_train, Y_train, average='samples')
     f1_test = f1_score(Y_pred_test, Y_test, average='samples')
