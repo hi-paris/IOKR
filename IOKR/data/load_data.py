@@ -66,6 +66,49 @@ def load_bibtex(dir_path: str):
 
     return X, Y, X_txt, Y_txt
 
+
+def load_corel5k(dir_path: str):
+    """
+    Load the bibtex dataset.
+    __author__ = "Michael Gygli, ETH Zurich"
+    from https://github.com/gyglim/dvn/blob/master/mlc_datasets/__init__.py
+
+    Parameters
+    ----------
+    dir_path : string - containing location of bibtex.arff
+
+
+    Returns
+    -------
+    X : np.array
+        Explanatory variables - N * 499 array variables in one vector - e.g. 'dependent', 'always'
+
+    Y : np.array
+        Target variables - N * 374 array variables in one vector - e.g. 'TAG_system', 'TAG_social_nets'
+
+    X_txt : list
+            Explanatory variables - N * 499 list variables in one vector - e.g. 'dependent', 'always'
+
+    Y_txt : list
+            Target variables - N * 374 list variables in one vector - e.g. 'TAG_system', 'TAG_social_nets'
+
+    """
+
+    feature_idx = 499
+
+    dataset = arff.load(open(dir_path+"/Corel5k.arff"), "r")
+    data = np.array(dataset['data'], np.int64)
+
+    X = data[:, 0:feature_idx]
+    Y = data[:, feature_idx:]
+
+    X_txt = [t[0] for t in dataset['attributes'][:feature_idx]]
+    Y_txt = [t[0] for t in dataset['attributes'][feature_idx:]]
+
+    return X, Y, X_txt, Y_txt
+
+
+
 # ####### Use Case
 # path = "../data/bibtex"
 # X, Y, _, _ = load_bibtex(path)
