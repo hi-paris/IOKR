@@ -28,7 +28,7 @@ def fitted_IOKR(X, y, L=1e-5, sx=1000, sy=10):
 
     return {'Train-score': f1_train, 'Test-score': f1_test}
 
-
+'''WAITING FOR Y_candidates modification
 class TestFit():
 
     def test_fit_prints(self, capfd):
@@ -89,7 +89,7 @@ class TestPredict():
             X[1] = "A string"
             scores = fitted_IOKR(Xt, yt, L=1e-5, sx=1000, sy=10)
             assert "could not convert string to float" in str(exception.value)
-
+'''
 
 '''IS NOT WORKING YET
 def test_wrong_input_raises_assertion():
