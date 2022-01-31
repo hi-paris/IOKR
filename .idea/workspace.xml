@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e82cd13-8c18-45c3-b85d-93848c38642e" name="Default Changelist" comment="adding setup file">
+      <change beforePath="$PROJECT_DIR$/.idea/IOKR.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/IOKR.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IOKR/tests/model/test_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/IOKR/tests/model/test_model.py" afterDir="false" />
     </list>
@@ -49,7 +51,7 @@
       <recent name="$PROJECT_DIR$/IOKR/visualization" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.load_data">
+  <component name="RunManager" selected="Python.model">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="IOKR" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -185,55 +187,5 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="adding setup file" />
     <option name="LAST_COMMIT_MESSAGE" value="adding setup file" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="184" y="112" width="1071" height="696" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1639353288584">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="184" y="112" width="1071" height="696" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900/1440.-137.1920.1080@0.0.1440.900" timestamp="1638197859836" />
-    <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1639353288584" />
-    <state x="420" y="260" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1639324092202">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="420" y="260" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1440.900@0.0.1440.900" timestamp="1639324092202" />
-    <state x="353" y="54" key="CommitChangelistDialog2" timestamp="1639353398845">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="353" y="54" key="CommitChangelistDialog2/0.0.1440.900/1440.-137.1920.1080@0.0.1440.900" timestamp="1638184284409" />
-    <state x="353" y="54" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1639353398845" />
-    <state width="1419" height="245" key="GridCell.Tab.0.bottom" timestamp="1639353356230">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state width="1419" height="245" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1639353356230" />
-    <state width="1419" height="245" key="GridCell.Tab.0.center" timestamp="1639353356230">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state width="1419" height="245" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1639353356230" />
-    <state width="1419" height="245" key="GridCell.Tab.0.left" timestamp="1639353356229">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state width="1419" height="245" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1639353356229" />
-    <state width="1419" height="245" key="GridCell.Tab.0.right" timestamp="1639353356230">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state width="1419" height="245" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1639353356230" />
-    <state x="229" y="89" key="SettingsEditor" timestamp="1639332375528">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="229" y="89" key="SettingsEditor/0.0.1440.900/1440.-137.1920.1080@0.0.1440.900" timestamp="1638184640844" />
-    <state x="229" y="89" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1639332375528" />
-    <state width="720" height="450" key="XDebugger.FullValuePopup" timestamp="1639322415858">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state width="720" height="450" key="XDebugger.FullValuePopup/0.0.1440.900@0.0.1440.900" timestamp="1639322415858" />
-    <state x="399" y="266" key="com.intellij.ide.util.TipDialog" timestamp="1639322948737">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="399" y="266" key="com.intellij.ide.util.TipDialog/0.0.1440.900@0.0.1440.900" timestamp="1639322948737" />
-    <state x="399" y="269" key="com.intellij.ide.util.TipDialog/0.23.1440.831/1440.-114.1920.1057@0.23.1440.831" timestamp="1638183633842" />
-    <state x="385" y="179" key="search.everywhere.popup" timestamp="1638184118720">
-      <screen x="0" y="23" width="1440" height="832" />
-    </state>
-    <state x="385" y="179" key="search.everywhere.popup/0.23.1440.832/1440.-114.1920.1057@0.23.1440.832" timestamp="1638184118720" />
   </component>
 </project>

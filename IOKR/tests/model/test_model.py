@@ -21,14 +21,14 @@ def fitted_IOKR(X, y, L=1e-5, sx=1000, sy=10):
     clf = iokr()
     clf.verbose = 1
     clf.fit(X=X_train, Y=Y_train, L=L, sx=sx, sy=sy)
-    Y_pred_train = clf.predict(X_test=X_train)
-    Y_pred_test = clf.predict(X_test=X_test)
+    Y_pred_train = clf.predict(X_test=X_train, Y_candidates=Y_train)
+    Y_pred_test = clf.predict(X_test=X_test, Y_candidates=Y_train)
     f1_train = f1_score(Y_pred_train, Y_train, average='samples')
     f1_test = f1_score(Y_pred_test, Y_test, average='samples')
 
     return {'Train-score': f1_train, 'Test-score': f1_test}
 
-'''WAITING FOR Y_candidates modification
+
 class TestFit():
 
     def test_fit_prints(self, capfd):
@@ -89,7 +89,20 @@ class TestPredict():
             X[1] = "A string"
             scores = fitted_IOKR(Xt, yt, L=1e-5, sx=1000, sy=10)
             assert "could not convert string to float" in str(exception.value)
-'''
+
+
+class TestAlphaTrain():
+
+    def test_alpha_train_returns(self):
+        test_size = 0.33
+        X_train, X_test, Y_train, Y_test = train_test_split(X, y, test_size=test_size, random_state=42)
+        clf = iokr()
+        clf.verbose = 1
+        A = clf.Alpha_train(X_test)
+        assert A != None, f""
+        assert A != "", f""
+        assert isinstance(A, np.ndarray), f""
+        assert A.shape == (int(y.shape[0]*test_size), int(y.shape[0]*test_size)), f""
 
 '''IS NOT WORKING YET
 def test_wrong_input_raises_assertion():
