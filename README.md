@@ -2,7 +2,7 @@
 
 ![Build Status](https://github.com/hi-paris/IOKR/workflows/pytesting/badge.svg)
 
-![cod cov](http://$SOME_BACKET.storage.googleapis.com/$PROJECT_NAME/codcov.svg)
+![Code Coverage](https://github.com/hi-paris/IOKR/workflows/.coverage.svg)
 
 [![Build Status](https://app.travis-ci.com/hi-paris/IOKR.svg?branch=main)](https://app.travis-ci.com/hi-paris/IOKR)
 
