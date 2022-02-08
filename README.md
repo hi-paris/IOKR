@@ -1,7 +1,9 @@
 # IOKR
 
 ![Build Status](https://github.com/hi-paris/IOKR/workflows/pytesting/badge.svg)
-[![Coverage Status](https://coveralls.io/repos/github/hi-paris/IOKR/badge.svg?branch=main&service=github)](https://coveralls.io/github/hi-paris/IOKR?branch=main&service=github)
+
+![Code Coverage](https://github.com/hi-paris/IOKR/workflows/.coverage.svg)
+
 [![Build Status](https://app.travis-ci.com/hi-paris/IOKR.svg?branch=main)](https://app.travis-ci.com/hi-paris/IOKR)
 
 Refs:
