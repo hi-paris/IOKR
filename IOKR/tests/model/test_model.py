@@ -6,6 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import f1_score
 import numpy as np
 from IOKR.model.model import IOKR as iokr
+import time
 from sklearn.utils._testing import assert_array_equal
 from sklearn.utils._testing import assert_array_almost_equal
 from sklearn.utils._testing import assert_almost_equal
@@ -38,6 +39,15 @@ class TestFit():
         assert err == "", f'{err}: need to be fixed'
         assert out != "", f'Fitting Time should have been printed '
 
+    def test_fit_time(self, X, y, L=1e-5, sx=1000, sy=10):
+        """Test the time for fitting"""
+        X_train, X_test, Y_train, Y_test = train_test_split(X, y, test_size=0.33, random_state=42)
+        clf = iokr()
+        clf.verbose = 1
+        t0 = time.time()
+        clf.fit(X=X_train, Y=Y_train, L=L, sx=sx, sy=sy)
+        fit_time = time.time()-t0
+        assert fit_time <100, f'"fit_time" is over 100 seconds'
 
 class TestPredict():
 
@@ -90,6 +100,20 @@ class TestPredict():
             scores = fitted_IOKR(Xt, yt, L=1e-5, sx=1000, sy=10)
             assert "could not convert string to float" in str(exception.value)
 
+    def test_predict_time(self, X, y, L=1e-5, sx=1000, sy=10):
+        """"""
+        X_train, X_test, Y_train, Y_test = train_test_split(X, y, test_size=0.33, random_state=42)
+        clf = iokr()
+        clf.verbose = 1
+        clf.fit(X=X_train, Y=Y_train, L=L, sx=sx, sy=sy)
+        train_t0 = time.time()
+        Y_pred_train = clf.predict(X_test=X_train, Y_candidates=Y_train)
+        train_pred_time = time.time() - train_t0
+        test_t0 = time.time()
+        Y_pred_test = clf.predict(X_test=X_test, Y_candidates=Y_train)
+        test_pred_time = time.time() - test_t0
+        assert train_pred_time <100, f'"train_pred_time" is over 100 seconds'
+        assert test_pred_time <100, f'"test_pred_time" is over 100 seconds'
 
 class TestAlphaTrain():
 

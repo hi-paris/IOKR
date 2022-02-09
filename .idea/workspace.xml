@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e82cd13-8c18-45c3-b85d-93848c38642e" name="Default Changelist" comment="adding setup file">
-      <change beforePath="$PROJECT_DIR$/.idea/IOKR.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/IOKR.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IOKR/tests/model/test_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/IOKR/tests/model/test_model.py" afterDir="false" />
     </list>
