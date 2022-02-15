@@ -1,0 +1,12 @@
+name: CodeCov
+
+on:
+  push:
+    branches: [ tests ]
+
+jobs:
+  cd:
+    name: Code Coverage Report
+    runs-on: ubuntu-latest
+    steps:
+      - uses: romeovs/lcov-reporter-action@v0.2.11
