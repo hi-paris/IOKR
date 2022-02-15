@@ -1,7 +1,7 @@
 # Implementation
 import time
 from sklearn.model_selection import KFold
-from sklearn.metrics.pairwise import rbf_kernel
+from sklearn.metrics.pairwise import linear_kernel, polynomial_kernel, rbf_kernel
 from sklearn.metrics import f1_score
 import numpy as np
 import pandas as pd
@@ -45,57 +45,94 @@ class IOKR:
         self.X_train = None
         self.Y_train = None
         self.Ky = None
-        self.sy = None
         self.M = None
         self.verbose = 0
+        self.input_kernel = None
         self.output_kernel = None
 
 #    @profile
-    def fit(self, X, Y, L, sx, sy):
+    def fit(self, X, Y, L, input_kernel='linear', input_kernel_param=None):
         """
         Model Fitting
 
         """
 
+        # save input and output training data
+        self.X_train, self_Y_train = X, Y
+
+        # instantiate input kernel parameter when not given
+        if input_kernel_param is None:
+            if input_kernel == 'rbf':
+                input_kernel_param = 1.
+            elif input_kernel == 'polynomial':
+                input_kernel_param = [3, None, 1]
+
+        # define input kernel
+        if input_kernel == 'linear':
+            self.input_kernel = lambda A, B: linear_kernel(A, B)
+        elif input_kernel == 'polynomial':
+            self.input_kernel = lambda A, B: polynomial_kernel(A, B, degree=input_kernel_param[0],
+                                                               gamma=input_kernel_param[1], coef0=input_kernel_param[2])
+        elif input_kernel == 'rbf':
+            self.input_kernel = lambda A, B: rbf_kernel(A, B, gamma=input_kernel_param)
+        else:
+            self.input_kernel = input_kernel
+
+        # compute input gram matrix
+        Kx = self.input_kernel(X, X)
+
+        # kernel ridge regression training computation: n x n matrix inversion
         t0 = time.time()
-        self.X_train = X
-        self.sx = sx
-        Kx = rbf_kernel(X, X, gamma=1 / (2 * self.sx))
         n = Kx.shape[0]
         self.M = np.linalg.inv(Kx + n * L * np.eye(n))
-        self.Y_train = Y
-        
         if self.verbose > 0:
             print(f'Fitting time: {time.time() - t0} in s')
             
-    def Alpha_train(self, X_test):
-        
-        Kx = rbf_kernel(self.X_train, X_test, gamma=1 / (2 * self.sx))
+    def alpha(self, X_test):
+
+        Kx = self.input_kernel(self.X_train, X_test)
         A = self.M.dot(Kx)
         
         return A
 
 #    @profile
-    def predict(self, X_test, Y_candidates):
+    def predict(self, X_test, Y_candidates, output_kernel='linear', output_kernel_param=None):
 
         """
         Model Prediction
 
         """
-        
 
+        # instantiate output kernel parameter when not given
+        if output_kernel_param is None:
+            if output_kernel == 'rbf':
+                output_kernel_param = 1.
+            elif output_kernel == 'polynomial':
+                output_kernel_param = [3, None, 1]
+
+        # define output kernel
+        if output_kernel == 'linear':
+            self.output_kernel = lambda A, B: linear_kernel(A, B)
+        elif output_kernel == 'polynomial':
+            self.output_kernel = lambda A, B: polynomial_kernel(A, B, degree=output_kernel_param[0],
+                                                                gamma=output_kernel_param[1],
+                                                                coef0=output_kernel_param[2])
+        elif output_kernel == 'rbf':
+            self.output_kernel = lambda A, B: rbf_kernel(A, B, gamma=output_kernel_param)
+        else:
+            self.output_kernel = output_kernel
+
+        # compute output gram matrix
+        Ky = self.output_kernel(self.Y_train, Y_candidates)
+
+        # compute prediction
         t0 = time.time()
-        
-        A = self.Alpha_train(X_test)
-        Ky = self.output_kernel(self.Y, Y_candidates)
-        scores = self.Ky.dot(A)
-        
+        Alpha = self.alpha(X_test)
+        scores = Ky.dot(Alpha)
         idx_pred = np.argmax(scores, axis=0)
-        
+        Y_pred = Y_candidates[idx_pred]
         if self.verbose > 0:
             print(f'Decoding time: {time.time() - t0} in s')
-            
-        Y_pred = Y_candidates[idx_pred]
         
         return Y_pred
 
