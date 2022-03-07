@@ -58,7 +58,7 @@ class IOKR:
         """
 
         # save input and output training data
-        self.X_train, self_Y_train = X, Y
+        self.X_train, self.Y_train = X, Y
 
         # instantiate input kernel parameter when not given
         if input_kernel_param is None:
@@ -94,6 +94,7 @@ class IOKR:
         A = self.M.dot(Kx)
         
         return A
+
 
 #    @profile
     def predict(self, X_test, Y_candidates, output_kernel='linear', output_kernel_param=None):
