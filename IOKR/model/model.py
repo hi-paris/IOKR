@@ -5,9 +5,10 @@ from sklearn.metrics.pairwise import linear_kernel, polynomial_kernel, rbf_kerne
 from sklearn.metrics import f1_score
 import numpy as np
 import pandas as pd
-#from IOKR.data.load_data import load_bibtex
+from IOKR.data.load_data import load_bibtex
 from sklearn.model_selection import train_test_split
 import arff
+from numpy.linalg import inv
 import os
 from line_profiler import LineProfiler
 
@@ -16,7 +17,7 @@ from line_profiler import LineProfiler
 
 #dir_path = os.path.dirname("/Users/gaetanbrison/Documents/GitHub/IOKR/IOKR/data/bibtex")
 #dir_path = os.path.dirname(os.path.realpath(__file__))
-#dataset = arff.load(open('/Users/gaetanbrison/Documents/GitHub/IOKR/IOKR/data/bibtex/bibtex.arff'), "r")
+dataset = arff.load(open('/Users/gaetanbrison/Documents/GitHub/IOKR/IOKR/data/bibtex/bibtex.arff'), "r")
 
 """
 Created on December 12, 2021
@@ -58,7 +59,7 @@ class IOKR:
         """
 
         # save input and output training data
-        self.X_train, self_Y_train = X, Y
+        self.X_train, self.Y_train = X, Y
 
         # instantiate input kernel parameter when not given
         if input_kernel_param is None:
@@ -95,6 +96,7 @@ class IOKR:
         
         return A
 
+
 #    @profile
     def predict(self, X_test, Y_candidates, output_kernel='linear', output_kernel_param=None):
 
@@ -128,7 +130,7 @@ class IOKR:
         # compute prediction
         t0 = time.time()
         Alpha = self.alpha(X_test)
-        scores = Ky.dot(Alpha)
+        scores = Ky.transpose().dot(Alpha)
         idx_pred = np.argmax(scores, axis=0)
         Y_pred = Y_candidates[idx_pred]
         if self.verbose > 0:
@@ -137,6 +139,7 @@ class IOKR:
         return Y_pred
 
 
+#### Example v1 Debugging
 
 
 # path = "/Users/gaetanbrison/Documents/GitHub/IOKR/IOKR/data/bibtex"
@@ -155,3 +158,26 @@ class IOKR:
 # f1_test = f1_score(Y_pred_test, Y_test, average='samples')
 #
 # print(f'Train f1 score: {f1_train} / Test f1 score {f1_test}')
+
+
+#### Example v2 Debugging
+
+
+#from IOKR.model.model import IOKR
+#from sklearn.model_selection import train_test_split
+#from IOKR.data.load_data import load_bibtex
+#from sklearn.metrics import f1_score
+
+path = "/Users/gaetanbrison/Documents/GitHub/IOKR/IOKR/data/bibtex"
+X, Y, _, _ = load_bibtex(path)
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.33, random_state=42)
+print(X_train.shape)
+clf = IOKR()
+clf.verbose = 1
+L = 1e-5
+sx = 1000
+sy = 10
+clf.fit(X=X_train, Y=Y_train, L=L)
+Y_pred_test = clf.predict(X_test=X_test, Y_candidates=Y_test)
+f1_test = f1_score(Y_pred_test, Y_test, average='samples')
+print( "Test f1 score:", f1_test)

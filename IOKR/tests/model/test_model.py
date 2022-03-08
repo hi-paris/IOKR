@@ -11,7 +11,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import f1_score, recall_score, precision_score, accuracy_score
 from sklearn.metrics import mean_squared_error as MSE
 from sklearn.utils.estimator_checks import check_estimator
+<<<<<<< HEAD
 from sklearn.datasets import load_iris
+=======
+>>>>>>> origin/main
 from sklearn.utils.validation import check_is_fitted, check_X_y
 import numpy as np
 from sklearn.exceptions import NotFittedError
@@ -25,12 +28,19 @@ from sklearn.utils._testing import assert_almost_equal
 ESTIMATORS = {
     "IOKR": iokr,
 }
+<<<<<<< HEAD
 
 # Datasets used
 #bibtex = load_bibtex(join(project_root(), "data/bibtex"))
 #corel5k = load_corel5k(join(project_root(), "data/corel5k"))
 iris = load_iris(return_X_y=True)
 
+=======
+
+# Datasets used
+bibtex = load_bibtex(join(project_root(), "data/bibtex"))
+corel5k = load_corel5k(join(project_root(), "data/corel5k"))
+>>>>>>> origin/main
 
 DATASETS = {
     #"bibtex": {'X': bibtex[0], 'Y': bibtex[1]},
@@ -75,7 +85,11 @@ def fitted_predicted_IOKR(X, y, L=1e-5, ):
     clf = iokr()
     clf.verbose = 1
     clf.fit(X=X_train, Y=Y_train, L=L)
+<<<<<<< HEAD
     Y_pred_test = clf.predict(X_test=X_test, Y_candidates=Y_test)
+=======
+    Y_pred_test = clf.predict(X_test=X_test, Y_candidates=Y_train)
+>>>>>>> origin/main
     results = {'Y_train': Y_train,
                'Y_test': Y_test,
                'Y_pred_test': Y_pred_test}
@@ -88,6 +102,7 @@ class TestFit:
     """
 
     def test_verbose(self, capfd):
+<<<<<<< HEAD
         """Test if fit function actually prints something
 
         Parameters
@@ -101,6 +116,9 @@ class TestFit:
         None
         """
 
+=======
+        """Test if fit function actually prints something"""
+>>>>>>> origin/main
         scores = fitted_predicted_IOKR(DATASETS['bibtex']['X'], DATASETS['bibtex']['Y'], L=1e-5)
         out, err = capfd.readouterr()
         assert err == "", f'{err}: need to be fixed'
@@ -109,6 +127,7 @@ class TestFit:
     @pytest.mark.parametrize("nameSet, dataXY", DATASETS.items())
     @pytest.mark.parametrize("nameTree, Tree", ESTIMATORS.items())
     def test_time(self, nameTree, Tree, nameSet, dataXY, L=1e-5):
+<<<<<<< HEAD
         """Test the time for fitting
 
         Parameters
@@ -127,6 +146,9 @@ class TestFit:
         -------
         None
         """
+=======
+        """Test the time for fitting"""
+>>>>>>> origin/main
         X_train, X_test, Y_train, Y_test = train_test_split(dataXY['X'], dataXY['Y'], test_size=0.33, random_state=42)
         clf = Tree()
         clf.verbose = 1
@@ -140,6 +162,7 @@ class TestFit:
     def test_fit_fits(self, nameTree, Tree, nameSet, dataXY):
         """Checks that using the .fit() function actually fit the estimator
 
+<<<<<<< HEAD
         Parameters
         ----------
         nameTree : str
@@ -151,6 +174,8 @@ class TestFit:
         dataXY : tuple of arrays
             Containing X and y from the dataset
 
+=======
+>>>>>>> origin/main
         Returns
         -------
         None
@@ -165,6 +190,7 @@ class TestFit:
 
     @pytest.mark.parametrize("nameTree, Tree", ESTIMATORS.items())
     def test_numerical_stability(self, nameTree, Tree, L=1e-5):
+<<<<<<< HEAD
         """Check numerical stability
 
         Parameters
@@ -179,6 +205,9 @@ class TestFit:
         -------
         None
         """
+=======
+        """Check numerical stability."""
+>>>>>>> origin/main
         X = np.array([
             [152.08097839, 140.40744019, 129.75102234, 159.90493774],
             [142.50700378, 135.81935120, 117.82884979, 162.75781250],
@@ -200,6 +229,7 @@ class TestFit:
 
     @pytest.mark.parametrize("nameTree, Tree", ESTIMATORS.items())
     def test_raise_error_on_1d_input(self, nameTree, Tree, L=1e-5, ):
+<<<<<<< HEAD
         """Test that an error is raised when X or Y are 1D arrays
 
         Parameters
@@ -214,6 +244,9 @@ class TestFit:
         -------
         None
         """
+=======
+        """Test that an error is raised when X or Y are 1D arrays"""
+>>>>>>> origin/main
         Xt = DATASETS['bibtex']['X'][:, 0].ravel()
         Xt_2d = DATASETS['bibtex']['X'][:, 0].reshape((-1, 1))
         yt = DATASETS['bibtex']['Y']
@@ -227,6 +260,7 @@ class TestFit:
 
     @pytest.mark.parametrize("nameTree, Tree", ESTIMATORS.items())
     def test_warning_on_big_input(self, nameTree, Tree, L=1e-5, ):
+<<<<<<< HEAD
         """Test if the warning for too large inputs is appropriate
 
         Parameters
@@ -241,6 +275,9 @@ class TestFit:
         -------
         None
         """
+=======
+        """Test if the warning for too large inputs is appropriate"""
+>>>>>>> origin/main
         Xt = np.repeat(10 ** 40., 4).astype(np.float64).reshape(-1, 1)
         clf = Tree()
         try:
@@ -254,6 +291,7 @@ class TestPredict:
     @pytest.mark.parametrize("nameSet, dataXY", DATASETS.items())
     @pytest.mark.parametrize("nameTree, Tree", ESTIMATORS.items())
     def test_model_return_values(self, nameTree, Tree, nameSet, dataXY):
+<<<<<<< HEAD
         """Tests for the returned values of the modeling function
 
         Parameters
@@ -270,6 +308,10 @@ class TestPredict:
         Returns
         -------
         None
+=======
+        """
+        Tests for the returned values of the modeling function
+>>>>>>> origin/main
         """
         returned_IOKR = fitted_predicted_IOKR(dataXY['X'], dataXY['Y'], L=1e-5, )
         # Check returned arrays' type
@@ -286,6 +328,7 @@ class TestPredict:
     @pytest.mark.parametrize("nameSet, dataXY", DATASETS.items())
     @pytest.mark.parametrize("nameTree, Tree", ESTIMATORS.items())
     def test_model_return_object(self, nameTree, Tree, nameSet, dataXY):
+<<<<<<< HEAD
         """Tests the returned object of the modeling function
 
         Parameters
@@ -303,6 +346,11 @@ class TestPredict:
         -------
         None
         """
+=======
+        """
+        Tests the returned object of the modeling function
+        """
+>>>>>>> origin/main
         returned_IOKR = fitted_predicted_IOKR(dataXY["X"], dataXY["Y"], L=1e-5, )
         # Check the return object type
         assert isinstance(returned_IOKR,
@@ -316,11 +364,16 @@ class TestPredict:
                                  f'but instead it is {len(returned_IOKR)}'
 
     def test_bad_X_y_inputation(self, ):
+<<<<<<< HEAD
         """Tests for raised exceptions (To complete)
 
         Returns
         -------
         None
+=======
+        """
+        Tests for raised exceptions (To complete)
+>>>>>>> origin/main
         """
         # ValueError
         with pytest.raises(ValueError):
@@ -357,6 +410,7 @@ class TestPredict:
     @pytest.mark.parametrize("nameSet, dataXY", DATASETS.items())
     @pytest.mark.parametrize("nameTree, Tree", ESTIMATORS.items())
     def test_time(self, nameTree, Tree, nameSet, dataXY, L=1e-5, ):
+<<<<<<< HEAD
         """Test the time for predicting
 
         Parameters
@@ -375,6 +429,9 @@ class TestPredict:
         -------
         None
         """
+=======
+        """Test the time for predicting"""
+>>>>>>> origin/main
         X_train, X_test, Y_train, Y_test = train_test_split(dataXY["X"], dataXY["Y"], test_size=0.33, random_state=42)
         clf = Tree()
         clf.verbose = 1
@@ -387,6 +444,7 @@ class TestPredict:
     @pytest.mark.parametrize("nameSet, dataXY", DATASETS.items())
     @pytest.mark.parametrize("nameTree, Tree", ESTIMATORS.items())
     def test_recall(self, nameTree, Tree, nameSet, dataXY):
+<<<<<<< HEAD
         """Test the recall score
 
         Parameters
@@ -404,6 +462,9 @@ class TestPredict:
         -------
         None
         """
+=======
+        """Test the recall score"""
+>>>>>>> origin/main
         fp_IOKR = fitted_predicted_IOKR(dataXY['X'], dataXY['Y'], L=1e-5, )
         recall_test = recall_score(fp_IOKR['Y_test'], fp_IOKR['Y_pred_test'])
         threshold = 0
@@ -413,6 +474,7 @@ class TestPredict:
     @pytest.mark.parametrize("nameSet, dataXY", DATASETS.items())
     @pytest.mark.parametrize("nameTree, Tree", ESTIMATORS.items())
     def test_precision(self, nameTree, Tree, nameSet, dataXY):
+<<<<<<< HEAD
         """Tests the precision score
         Parameters
         ----------
@@ -429,6 +491,9 @@ class TestPredict:
         -------
         None
         """
+=======
+        """Tests the precision score"""
+>>>>>>> origin/main
         for name, data in DATASETS.items():
             fp_IOKR = fitted_predicted_IOKR(dataXY['X'], dataXY['Y'], L=1e-5, )
             precision_test = precision_score(fp_IOKR['Y_test'], fp_IOKR['Y_pred_test'])
@@ -439,6 +504,7 @@ class TestPredict:
     @pytest.mark.parametrize("nameSet, dataXY", DATASETS.items())
     @pytest.mark.parametrize("nameTree, Tree", ESTIMATORS.items())
     def test_f1_score(self, nameTree, Tree, nameSet, dataXY):
+<<<<<<< HEAD
         """Tests the F1_score
 
         Parameters
@@ -456,6 +522,9 @@ class TestPredict:
         -------
         None
         """
+=======
+        """Tests the F1_score"""
+>>>>>>> origin/main
         fp_IOKR = fitted_predicted_IOKR(dataXY['X'], dataXY['Y'], L=1e-5, )
         f1_test = f1_score(fp_IOKR['Y_pred_test'], fp_IOKR['Y_test'], average='samples')
         threshold = 0
@@ -467,6 +536,7 @@ class TestPredict:
     @pytest.mark.parametrize("nameSet, dataXY", DATASETS.items())
     @pytest.mark.parametrize("nameTree, Tree", ESTIMATORS.items())
     def test_accuracy_score(self, nameTree, Tree, nameSet, dataXY):
+<<<<<<< HEAD
         """Check accuracy of the model
 
         Parameters
@@ -484,6 +554,9 @@ class TestPredict:
         -------
         None
         """
+=======
+        """Check accuracy of the model"""
+>>>>>>> origin/main
         fp_IOKR = fitted_predicted_IOKR(dataXY['X'], dataXY['Y'], L=1e-5, )
         accuracy = accuracy_score(fp_IOKR['Y_test'], fp_IOKR['Y_pred_test'])
         threshold = 0
@@ -492,6 +565,7 @@ class TestPredict:
     @pytest.mark.parametrize("nameSet, dataXY", DATASETS.items())
     @pytest.mark.parametrize("nameTree, Tree", ESTIMATORS.items())
     def test_mse(self, nameTree, Tree, nameSet, dataXY):
+<<<<<<< HEAD
         """Checks the MSE score of the model
 
         Parameters
@@ -509,6 +583,9 @@ class TestPredict:
         -------
         None
         """
+=======
+        """Checks the MSE score of the model"""
+>>>>>>> origin/main
         fp_IOKR = fitted_predicted_IOKR(dataXY['X'], dataXY['Y'], L=1e-5, )
         test_mse = MSE(fp_IOKR['Y_test'], fp_IOKR['Y_pred_test'])
         threshold = 0
@@ -519,6 +596,7 @@ class TestAlphaTrain:
 
     @pytest.mark.parametrize("nameSet, dataXY", DATASETS.items())
     def test_alpha_returns(self, nameSet, dataXY):
+<<<<<<< HEAD
         """Tests if the function returns what it should
 
         Parameters
@@ -532,6 +610,8 @@ class TestAlphaTrain:
         -------
         None
         """
+=======
+>>>>>>> origin/main
         test_size = 0.33
         X_train, X_test, Y_train, Y_test = train_test_split(DATASETS['bibtex']['X'], DATASETS['bibtex']['Y'],
                                                             test_size=test_size, random_state=42)
@@ -543,9 +623,16 @@ class TestAlphaTrain:
         assert A != "", f"A is empty"
         assert isinstance(A, np.ndarray), f"Failed with {nameSet}: A should be 'np.ndarray', but is {type(A)}"
         assert A.shape == good_shape, f"Failed with {nameSet}: Shape of A should be of {good_shape}, but is {A.shape}"
+<<<<<<< HEAD
 
 # To confirm
 # def test_sklearn_check_estimator():
 #    """test with check_estimator from sklearn"""
 #    check_estimator(iokr())
+=======
+>>>>>>> origin/main
 
+# To confirm
+# def test_sklearn_check_estimator():
+#    """test with check_estimator from sklearn"""
+#    check_estimator(iokr())
