@@ -17,7 +17,7 @@ from line_profiler import LineProfiler
 
 #dir_path = os.path.dirname("/Users/gaetanbrison/Documents/GitHub/IOKR/IOKR/data/bibtex")
 #dir_path = os.path.dirname(os.path.realpath(__file__))
-dataset = arff.load(open('/Users/gaetanbrison/Documents/GitHub/IOKR/IOKR/data/bibtex/bibtex.arff'), "r")
+#dataset = arff.load(open('/Users/gaetanbrison/Documents/GitHub/IOKR/IOKR/data/bibtex/bibtex.arff'), "r")
 
 """
 Created on December 12, 2021
@@ -168,16 +168,16 @@ class IOKR:
 #from IOKR.data.load_data import load_bibtex
 #from sklearn.metrics import f1_score
 
-path = "/Users/gaetanbrison/Documents/GitHub/IOKR/IOKR/data/bibtex"
-X, Y, _, _ = load_bibtex(path)
-X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.33, random_state=42)
-print(X_train.shape)
-clf = IOKR()
-clf.verbose = 1
-L = 1e-5
-sx = 1000
-sy = 10
-clf.fit(X=X_train, Y=Y_train, L=L)
-Y_pred_test = clf.predict(X_test=X_test, Y_candidates=Y_test)
-f1_test = f1_score(Y_pred_test, Y_test, average='samples')
-print( "Test f1 score:", f1_test)
+#path = "/Users/gaetanbrison/Documents/GitHub/IOKR/IOKR/data/bibtex"
+#X, Y, _, _ = load_bibtex(path)
+#X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.33, random_state=42)
+#print(X_train.shape)
+#clf = IOKR()
+#clf.verbose = 1
+#L = 1e-5
+#sx = 1000
+#sy = 10
+#clf.fit(X=X_train, Y=Y_train, L=L)
+#Y_pred_test = clf.predict(X_test=X_test, Y_candidates=Y_test)
+#f1_test = f1_score(Y_pred_test, Y_test, average='samples')
+#print( "Test f1 score:", f1_test)
