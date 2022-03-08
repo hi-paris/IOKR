@@ -2,7 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5e82cd13-8c18-45c3-b85d-93848c38642e" name="Default Changelist" comment="adding setup file">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/IOKR.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/IOKR.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IOKR.egg-info/PKG-INFO" beforeDir="false" afterPath="$PROJECT_DIR$/IOKR.egg-info/PKG-INFO" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IOKR.egg-info/SOURCES.txt" beforeDir="false" afterPath="$PROJECT_DIR$/IOKR.egg-info/SOURCES.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IOKR.egg-info/dependency_links.txt" beforeDir="false" afterPath="$PROJECT_DIR$/IOKR.egg-info/dependency_links.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IOKR.egg-info/requires.txt" beforeDir="false" afterPath="$PROJECT_DIR$/IOKR.egg-info/requires.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IOKR.egg-info/top_level.txt" beforeDir="false" afterPath="$PROJECT_DIR$/IOKR.egg-info/top_level.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IOKR/model/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/IOKR/model/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IOKR/tests/data/test_load_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/IOKR/tests/data/test_load_data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IOKR/tests/model/test_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/IOKR/tests/model/test_model.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,7 +53,9 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
+    <property name="TODO_SCOPE" value="All Places" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/venv/IOKR" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">

@@ -4,14 +4,19 @@ import pytest
 import numpy as np
 from IOKR.data.load_data import load_bibtex
 from IOKR.data.load_data import load_corel5k
-
+from sklearn.utils import check_X_y
 
 
 class TestLoadBibtex():
     """Test class for the function: load_bibtex"""
 
     def test_returned_variables_not_empty(self):
-        """test checking if returned variables from load_bibtex are not empty"""
+        """Test checking if returned variables from load_bibtex are not empty
+
+        Returns
+        -------
+        None
+        """
         load = load_bibtex("IOKR/data/bibtex")
         print(load)
         assert load[0] is not None, "Expected variable: 'X'"
@@ -20,7 +25,12 @@ class TestLoadBibtex():
         assert load[3] != "", "Expected variable: 'Y_txt'"
 
     def test_returned_variables_good_type(self):
-        """Test checking if returned variables from load_bibtex are the expected type"""
+        """Test checking if returned variables from load_bibtex are the expected type
+
+        Returns
+        -------
+        None
+        """
         load = load_bibtex("IOKR/data/bibtex")
         actual_x = type(load[0])
         actual_y = type(load[1])
@@ -35,7 +45,12 @@ class TestLoadBibtex():
         assert isinstance(load[3], list), f"'Y_txt' should be {expected2}, but is {actual_y_txt} "
 
     def test_returned_variables_good_shape(self):
-        """Test checking if returned variables from load_bibtex are the expected type"""
+        """Test checking if returned variables from load_bibtex are the expected shape
+
+        Returns
+        -------
+        None
+        """
         load = load_bibtex("IOKR/data/bibtex")
         actual_x_shape = load[0].shape
         actual_y_shape = load[1].shape
@@ -51,11 +66,32 @@ class TestLoadBibtex():
         assert actual_x_txt_len, f"'X_txt' should be {expected_x_txt_len}, but is {actual_x_txt_len} "
         assert expected_y_txt_len, f"'Y_txt' should be {expected_y_txt_len}, but is {actual_y_txt_len} "
 
+    def test_check_X_y(self):
+        """Input validation for standard estimators.
+
+        Checks X and y for consistent length, enforces X to be 2D and y 1D.
+        By default, X is checked to be non-empty and containing only finite values.
+        Standard input checks are also applied to y,
+        such as checking that y does not have np.nan or np.inf targets.
+
+        Returns
+        -------
+        None
+        """
+        load = load_bibtex("IOKR/data/bibtex")
+        check = check_X_y(load[0], load[1])
+        assert check
+
 class TestLoadCorel5k():
     """Test class for the function: load_corel5k"""
 
     def test_returned_variables_not_empty(self):
-        """test checking if returned variables from load_bibtex are not empty"""
+        """Test checking if returned variables from load_corel5k are not empty
+
+        Returns
+        -------
+        None
+        """
         load = load_corel5k("IOKR/data/corel5k")
         print(load)
         assert load[0] is not None, "Expected variable: 'X'"
@@ -64,7 +100,12 @@ class TestLoadCorel5k():
         assert load[3] != "", "Expected variable: 'Y_txt'"
 
     def test_returned_variables_good_type(self):
-        """Test checking if returned variables from load_bibtex are the expected type"""
+        """Test checking if returned variables from load_corel5k are the expected type
+
+        Returns
+        -------
+        None
+        """
         load = load_corel5k("IOKR/data/corel5k")
         actual_x = type(load[0])
         actual_y = type(load[1])
@@ -79,7 +120,12 @@ class TestLoadCorel5k():
         assert isinstance(load[3], list), f"'Y_txt' should be {expected2}, but is {actual_y_txt} "
 
     def test_returned_variables_good_shape(self):
-        """Test checking if returned variables from load_bibtex are the expected type"""
+        """Test checking if returned variables from load_corel5k are of expected shape
+
+        Returns
+        -------
+        None
+        """
         load = load_corel5k("IOKR/data/corel5k")
         actual_x_shape = load[0].shape
         actual_y_shape = load[1].shape
