@@ -8,6 +8,11 @@ ENV/
 env.bak/
 venv.bak/
 
+IOKR.egg-info
+
+# Ignore .c files
+*.c
+
 # Ignore .c files
 OK3/*.c
 

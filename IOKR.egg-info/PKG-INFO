@@ -2,7 +2,6 @@ Metadata-Version: 2.1
 Name: IOKR
 Version: 0.1.0
 Summary: Test package using IOKR method with the long term goal to develop a Structured-Prediction Package
-Home-page: UNKNOWN
 Author: Florence d'Alché-Buc (Researcher), Luc Motte (Researcher), Awais Sani (Engineer), Amine Yamoul (Engineer), Gaëtan Brison (Engineer)
 License: UNKNOWN
 Platform: UNKNOWN

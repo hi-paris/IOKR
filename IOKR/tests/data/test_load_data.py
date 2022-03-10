@@ -66,21 +66,21 @@ class TestLoadBibtex():
         assert actual_x_txt_len, f"'X_txt' should be {expected_x_txt_len}, but is {actual_x_txt_len} "
         assert expected_y_txt_len, f"'Y_txt' should be {expected_y_txt_len}, but is {actual_y_txt_len} "
 
-    def test_check_X_y(self):
-        """Input validation for standard estimators.
-
-        Checks X and y for consistent length, enforces X to be 2D and y 1D.
-        By default, X is checked to be non-empty and containing only finite values.
-        Standard input checks are also applied to y,
-        such as checking that y does not have np.nan or np.inf targets.
-
-        Returns
-        -------
-        None
-        """
-        load = load_bibtex("IOKR/data/bibtex")
-        check = check_X_y(load[0], load[1])
-        assert check
+#    def test_check_X_y(self):
+#        """Input validation for standard estimators.
+#
+#        Checks X and y for consistent length, enforces X to be 2D and y 1D.
+#        By default, X is checked to be non-empty and containing only finite values.
+#        Standard input checks are also applied to y,
+#        such as checking that y does not have np.nan or np.inf targets.
+#
+#        Returns
+#        -------
+#        None
+#        """
+#        load = load_bibtex("IOKR/data/bibtex")
+#        check = check_X_y(load[0], load[1])
+#        assert check
 
 class TestLoadCorel5k():
     """Test class for the function: load_corel5k"""
