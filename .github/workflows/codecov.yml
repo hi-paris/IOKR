@@ -1,14 +1,14 @@
 
 name: coverage
 
-#on:
-#  pull_request:
-#    branches:
-#      - '*'
-
 on:
   push:
 #    branches: [ main ]
+  schedule:
+    - cron: '0 0 1 * *'
+# pull_request:
+#    branches:
+#      - '*'
 
 
 jobs:
@@ -16,16 +16,17 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [macos-latest, ubuntu-latest, windows-latest]
+        python: ['3.7',]
     env:
       OS: ${{ matrix.os }}
-      PYTHON: '3.7'
+      PYTHON: ${{ matrix.python }}
     steps:
     - uses: actions/checkout@master
     - name: Setup Python
       uses: actions/setup-python@master
       with:
-        python-version: 3.7
+        python-version: ${{ matrix.python }}
     - name: setup IOKR
       run: |
         pip install -r requirements.txt
