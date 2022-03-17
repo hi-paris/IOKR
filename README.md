@@ -2,8 +2,8 @@
 
 ![Build Status](https://github.com/hi-paris/IOKR/workflows/pytesting/badge.svg)
 [![Anaconda Cloud](https://anaconda.org/conda-forge/pot/badges/version.svg)](https://anaconda.org/conda-forge/pot)
-![Code Coverage](https://github.com/hi-paris/IOKR/workflows/.coverage.svg)
-[![License](https://anaconda.org/conda-forge/pot/badges/license.svg)](https://github.com/PythonOT/POT/blob/master/LICENSE)
+[![Codecov Status](https://codecov.io/gh/PythonOT/POT/branch/master/graph/badge.svg)](https://codecov.io/gh/PythonOT/POT)
+[![License](https://anaconda.org/conda-forge/IOKR/badges/license.svg)](https://github.com/IOKR/IOKR/blob/master/LICENSE)
 
 Refs:
 - Brouard, C., d'Alché-Buc, F., Szafranski, M. Semi-supervised Penalized Output Kernel Regression for Link Prediction, ICML 2011: 593-600, (2011).
