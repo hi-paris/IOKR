@@ -1,8 +1,8 @@
 # IOKR
 
 ![Build Status](https://github.com/hi-paris/IOKR/workflows/pytesting/badge.svg)
-[![Anaconda Cloud](https://anaconda.org/conda-forge/pot/badges/version.svg)](https://anaconda.org/conda-forge/pot)
-[![Codecov Status](https://codecov.io/gh/PythonOT/POT/branch/master/graph/badge.svg)](https://codecov.io/gh/PythonOT/POT)
+[![Anaconda Cloud](https://anaconda.org/conda-forge/IOKR/badges/version.svg)](https://anaconda.org/conda-forge/pot)
+[![Codecov Status](https://codecov.io/gh/IOKR/POT/branch/master/graph/badge.svg)](https://codecov.io/gh/PythonOT/POT)
 [![License](https://anaconda.org/conda-forge/IOKR/badges/license.svg)](https://github.com/IOKR/IOKR/blob/master/LICENSE)
 
 Refs:
