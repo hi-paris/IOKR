@@ -103,7 +103,7 @@ The contributors to this library are
 * [Luc Motte](https://www.telecom-paris.fr/fr/recherche/laboratoires/laboratoire-traitement-et-communication-de-linformation-ltci/les-equipes-de-recherche/signal-statistique-et-apprentissage-s2a/personnes) (Researcher)
 * [Tamim El Ahmad](https://www.telecom-paris.fr/fr/recherche/laboratoires/laboratoire-traitement-et-communication-de-linformation-ltci/les-equipes-de-recherche/signal-statistique-et-apprentissage-s2a/personnes) (Researcher)
 * [Gaëtan Brison](https://engineeringteam.hi-paris.fr/about-us/) (Engineer)
-* [Danaël SCHLEWER-BECKER](https://engineeringteam.hi-paris.fr/about-us/) (Engineer)
+* [Danaël Schlewer-Becker](https://engineeringteam.hi-paris.fr/about-us/) (Engineer)
 * [Awais Sani](https://engineeringteam.hi-paris.fr/about-us/) (Engineer)
 
 
