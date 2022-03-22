@@ -115,9 +115,9 @@ Every contribution is welcome and should respect the [contribution guidelines](.
 
 You can ask questions and join the development discussion:
 
-* On the POT [slack channel](https://IOKR-toolbox.slack.com)
-* On the POT [gitter channel](https://gitter.im/IOKR/community)
-* On the POT [mailing list](https://mail.python.org/mm3/mailman3/lists/IOKR.python.org/)
+* On the IOKR [slack channel](https://IOKR-toolbox.slack.com)
+* On the IOKR [gitter channel](https://gitter.im/IOKR/community)
+* On the IOKR [mailing list](https://mail.python.org/mm3/mailman3/lists/IOKR.python.org/)
 
 You can also post bug reports and feature requests in Github issues. Make sure to read our [guidelines](.github/CONTRIBUTING.md) first.
 
