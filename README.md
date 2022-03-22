@@ -55,7 +55,7 @@ import IOKR
 * Import the toolbox
 
 ```python
-import ot
+import IOKR
 ```
 
 * Run IOKR
