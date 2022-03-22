@@ -7,31 +7,22 @@
 
 
 
-This open source Python library provide several solvers for optimization
-problems related to Optimal Transport for signal, image processing and machine
-learning.
+This open source Python library provide several methods for Output Kernelization.
 
-Website and documentation: [https://PythonOT.github.io/](https://PythonOT.github.io/)
 
-Source Code (MIT): [https://github.com/PythonOT/POT](https://github.com/PythonOT/POT)
+Website and documentation: [https://IOKR.github.io/](https://IOKR.github.io/)
 
-POT provides the following generic OT solvers (links to examples):
-
-* [OT Network Simplex solver](https://pythonot.github.io/auto_examples/plot_OT_1D.html) for the linear program/ Earth Movers Distance [1] .
-* [Conditional gradient](https://pythonot.github.io/auto_examples/plot_optim_OTreg.html) [6] and [Generalized conditional gradient](https://pythonot.github.io/auto_examples/plot_optim_OTreg.html) for regularized OT [7].
-* Entropic regularization OT solver with [Sinkhorn Knopp Algorithm](https://pythonot.github.io/auto_examples/plot_OT_1D.html) [2] , stabilized version [9] [10] [34], greedy Sinkhorn [22] and [Screening Sinkhorn [26] ](https://pythonot.github.io/auto_examples/plot_screenkhorn_1D.html).
-* Bregman projections for [Wasserstein barycenter](https://pythonot.github.io/auto_examples/barycenters/plot_barycenter_lp_vs_entropic.html) [3], [convolutional barycenter](https://pythonot.github.io/auto_examples/barycenters/plot_convolutional_barycenter.html) [21]  and unmixing [4].
-
-#### Using and citing the toolbox
+Source Code (MIT): [https://github.com/IOKR/IOKR](https://github.com/IOKR/IOKR)
 
 
 ## Installation
 
 The library has been tested on Linux, MacOSX and Windows. It requires a C++ compiler for building/installing the EMD solver and relies on the following Python modules:
 
+- Pandas (>=1.2)
 - Numpy (>=1.16)
 - Scipy (>=1.0)
-- Cython (>=0.23) (build only, not necessary when installing from pip or conda)
+- Scikit-learn (>=1.0) 
 
 #### Pip installation
 
@@ -39,7 +30,7 @@ The library has been tested on Linux, MacOSX and Windows. It requires a C++ comp
 You can install the toolbox through PyPI with:
 
 ```console
-pip install iokr
+pip install IOKR
 ```
 
 #### Anaconda installation with conda-forge
