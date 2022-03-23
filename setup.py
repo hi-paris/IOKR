@@ -1,6 +1,7 @@
 # Import required functions
-from setuptools import setup, find_packages
+from setuptools import setup, find_packages, Command
 import pathlib
+import os
 
 
 # The directory containing this file
@@ -27,3 +28,20 @@ setup(
 )
 
 
+class CleanCommand(Command):
+    """Custom clean command to tidy up the project root."""
+    user_options = []
+    def initialize_options(self):
+        pass
+    def finalize_options(self):
+        pass
+    def run(self):
+        os.system('rm -vrf ./build ./dist ./*.pyc ./*.tgz ./*.egg-info')
+
+# Further down when you call setup()
+setup(
+    # ... Other setup options
+    cmdclass={
+        'clean': CleanCommand,
+    }
+)
