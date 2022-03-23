@@ -100,9 +100,17 @@ tomli==1.2.2
 torch==1.10.2
 tqdm==4.63.0
 traitlets==5.1.1
+typing-extensions==4.0.0
 twine==3.8.0
 typing_extensions==4.0.0
 urllib3==1.26.8
+attrs>=19.2.0
+pytest~=5.3
+pytest-cov~=2.8
+pytest-mock~=1.13
+pytruth~=1.1
+hypothesis~=4.56
+python-coveralls
 wcwidth==0.2.5
 webencodings==0.5.1
 Werkzeug==2.0.2
