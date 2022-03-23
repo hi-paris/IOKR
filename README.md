@@ -1,7 +1,7 @@
 # IOKR
 
 ![Build Status](https://github.com/hi-paris/IOKR/workflows/pytesting/badge.svg)
-[![Codecov Status](https://codecov.io/gh/IOKR/IOKR/branch/master/graph/badge.svg)](https://codecov.io/gh/IOKR/IOKR)
+
 
 
 
