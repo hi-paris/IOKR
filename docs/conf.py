@@ -18,8 +18,8 @@ sys.path.insert(0, os.path.abspath('..'))
 # -- Project information -----------------------------------------------------
 
 project = 'IOKR'
-copyright = '2022, Florence, Luc, Tamim, Gaëtan, Awais, Danaël'
-author = 'Florence, Luc, Tamim, Gaëtan, Awais, Danaël'
+copyright = "2022, Florence D'Alché  , Luc Motte, Tamim Elahmad, Gaëtan Brison, Awais Sani, Danaël Schlewer-Becker"
+author = "Florence D'Alché, Luc Motte, Tamim Elahmad, Gaëtan Brison, Awais Sani, Danaël Schlewer-Becker"
 
 
 # -- General configuration ---------------------------------------------------

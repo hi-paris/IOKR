@@ -15,6 +15,7 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -48,8 +49,8 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="IOKR.html#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="IOKR.html#iokr-iokr-module">IOKR.iokr module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="IOKR.html#module-contents">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="IOKR.html#module-IOKR.iokr">IOKR.iokr module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="IOKR.html#module-IOKR">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="setup.html">setup module</a></li>
@@ -84,19 +85,342 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="iokr-tests-model-package">
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="iokr-tests-model-package">
 <h1>IOKR.tests.model package<a class="headerlink" href="#iokr-tests-model-package" title="Permalink to this headline"></a></h1>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
 </section>
-<section id="iokr-tests-model-test-model-module">
-<h2>IOKR.tests.model.test_model module<a class="headerlink" href="#iokr-tests-model-test-model-module" title="Permalink to this headline"></a></h2>
+<section id="module-IOKR.tests.model.test_model">
+<span id="iokr-tests-model-test-model-module"></span><h2>IOKR.tests.model.test_model module<a class="headerlink" href="#module-IOKR.tests.model.test_model" title="Permalink to this headline"></a></h2>
+<p>Tests for model/model.py
+Documentation in progress</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="IOKR.tests.model.test_model.TestAlpha">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IOKR.tests.model.test_model.</span></span><span class="sig-name descname"><span class="pre">TestAlpha</span></span><a class="headerlink" href="#IOKR.tests.model.test_model.TestAlpha" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="IOKR.tests.model.test_model.TestAlpha.test_alpha_returns">
+<span class="sig-name descname"><span class="pre">test_alpha_returns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nameSet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataXY</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#IOKR.tests.model.test_model.TestAlpha.test_alpha_returns" title="Permalink to this definition"></a></dt>
+<dd><p>Tests if the function returns what it should</p>
+<dl class="simple">
+<dt>nameSet<span class="classifier">str</span></dt><dd><p>Name of the dataset</p>
+</dd>
+<dt>dataXY<span class="classifier">tuple of arrays</span></dt><dd><p>Containing X and y from the dataset</p>
+</dd>
+</dl>
+<p>None</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="IOKR.tests.model.test_model.TestFit">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IOKR.tests.model.test_model.</span></span><span class="sig-name descname"><span class="pre">TestFit</span></span><a class="headerlink" href="#IOKR.tests.model.test_model.TestFit" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>class for the tests concerning .fit()</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="IOKR.tests.model.test_model.TestFit.test_fit_fits">
+<span class="sig-name descname"><span class="pre">test_fit_fits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nameTree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Tree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nameSet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataXY</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#IOKR.tests.model.test_model.TestFit.test_fit_fits" title="Permalink to this definition"></a></dt>
+<dd><p>Checks that using the .fit() function actually fit the estimator</p>
+<dl class="simple">
+<dt>nameTree<span class="classifier">str</span></dt><dd><p>Name of the tree estimator</p>
+</dd>
+<dt>Tree<span class="classifier">estimator</span></dt><dd><p>estimator to check</p>
+</dd>
+<dt>nameSet<span class="classifier">str</span></dt><dd><p>Name of the dataset</p>
+</dd>
+<dt>dataXY<span class="classifier">tuple of arrays</span></dt><dd><p>Containing X and y from the dataset</p>
+</dd>
+</dl>
+<p>None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IOKR.tests.model.test_model.TestFit.test_numerical_stability">
+<span class="sig-name descname"><span class="pre">test_numerical_stability</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nameTree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Tree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">L</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#IOKR.tests.model.test_model.TestFit.test_numerical_stability" title="Permalink to this definition"></a></dt>
+<dd><p>Check numerical stability</p>
+<dl class="simple">
+<dt>nameTree<span class="classifier">str</span></dt><dd><p>Name of the tree estimator</p>
+</dd>
+<dt>Tree<span class="classifier">estimator</span></dt><dd><p>estimator to check</p>
+</dd>
+</dl>
+<p>L:</p>
+<p>None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IOKR.tests.model.test_model.TestFit.test_raise_error_on_1d_input">
+<span class="sig-name descname"><span class="pre">test_raise_error_on_1d_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nameTree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Tree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">L</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#IOKR.tests.model.test_model.TestFit.test_raise_error_on_1d_input" title="Permalink to this definition"></a></dt>
+<dd><p>Test that an error is raised when X or Y are 1D arrays</p>
+<dl class="simple">
+<dt>nameTree<span class="classifier">str</span></dt><dd><p>Name of the tree estimator</p>
+</dd>
+<dt>Tree<span class="classifier">estimator</span></dt><dd><p>estimator to check</p>
+</dd>
+</dl>
+<p>L:</p>
+<p>None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IOKR.tests.model.test_model.TestFit.test_time">
+<span class="sig-name descname"><span class="pre">test_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nameTree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Tree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nameSet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataXY</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">L</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#IOKR.tests.model.test_model.TestFit.test_time" title="Permalink to this definition"></a></dt>
+<dd><p>Test the time for fitting</p>
+<dl class="simple">
+<dt>nameTree<span class="classifier">str</span></dt><dd><p>Name of the tree estimator</p>
+</dd>
+<dt>Tree<span class="classifier">estimator</span></dt><dd><p>estimator to check</p>
+</dd>
+<dt>nameSet<span class="classifier">str</span></dt><dd><p>Name of the dataset</p>
+</dd>
+<dt>dataXY<span class="classifier">tuple of arrays</span></dt><dd><p>Containing X and y from the dataset</p>
+</dd>
+</dl>
+<p>L:</p>
+<p>None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IOKR.tests.model.test_model.TestFit.test_verbose">
+<span class="sig-name descname"><span class="pre">test_verbose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">capfd</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#IOKR.tests.model.test_model.TestFit.test_verbose" title="Permalink to this definition"></a></dt>
+<dd><p>Test if fit function actually prints something</p>
+<p>capfd: fixture
+Allows access to stdout/stderr output created
+during test execution.</p>
+<p>None</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="IOKR.tests.model.test_model.TestPredict">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IOKR.tests.model.test_model.</span></span><span class="sig-name descname"><span class="pre">TestPredict</span></span><a class="headerlink" href="#IOKR.tests.model.test_model.TestPredict" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="IOKR.tests.model.test_model.TestPredict.test_accuracy_score">
+<span class="sig-name descname"><span class="pre">test_accuracy_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nameTree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Tree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nameSet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataXY</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#IOKR.tests.model.test_model.TestPredict.test_accuracy_score" title="Permalink to this definition"></a></dt>
+<dd><p>Check accuracy of the model</p>
+<dl class="simple">
+<dt>nameTree<span class="classifier">str</span></dt><dd><p>Name of the tree estimator</p>
+</dd>
+<dt>Tree<span class="classifier">estimator</span></dt><dd><p>estimator to check</p>
+</dd>
+<dt>nameSet<span class="classifier">str</span></dt><dd><p>Name of the dataset</p>
+</dd>
+<dt>dataXY<span class="classifier">tuple of arrays</span></dt><dd><p>Containing X and y from the dataset</p>
+</dd>
+</dl>
+<p>None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IOKR.tests.model.test_model.TestPredict.test_bad_X_y_inputation">
+<span class="sig-name descname"><span class="pre">test_bad_X_y_inputation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#IOKR.tests.model.test_model.TestPredict.test_bad_X_y_inputation" title="Permalink to this definition"></a></dt>
+<dd><p>Tests for raised exceptions (To complete)</p>
+<p>None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IOKR.tests.model.test_model.TestPredict.test_f1_score">
+<span class="sig-name descname"><span class="pre">test_f1_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nameTree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Tree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nameSet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataXY</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#IOKR.tests.model.test_model.TestPredict.test_f1_score" title="Permalink to this definition"></a></dt>
+<dd><p>Tests the F1_score</p>
+<dl class="simple">
+<dt>nameTree<span class="classifier">str</span></dt><dd><p>Name of the tree estimator</p>
+</dd>
+<dt>Tree<span class="classifier">estimator</span></dt><dd><p>estimator to check</p>
+</dd>
+<dt>nameSet<span class="classifier">str</span></dt><dd><p>Name of the dataset</p>
+</dd>
+<dt>dataXY<span class="classifier">tuple of arrays</span></dt><dd><p>Containing X and y from the dataset</p>
+</dd>
+</dl>
+<p>None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IOKR.tests.model.test_model.TestPredict.test_model_return_object">
+<span class="sig-name descname"><span class="pre">test_model_return_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nameTree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Tree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nameSet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataXY</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#IOKR.tests.model.test_model.TestPredict.test_model_return_object" title="Permalink to this definition"></a></dt>
+<dd><p>Tests the returned object of the modeling function</p>
+<dl class="simple">
+<dt>nameTree<span class="classifier">str</span></dt><dd><p>Name of the tree estimator</p>
+</dd>
+<dt>Tree<span class="classifier">estimator</span></dt><dd><p>estimator to check</p>
+</dd>
+<dt>nameSet<span class="classifier">str</span></dt><dd><p>Name of the dataset</p>
+</dd>
+<dt>dataXY<span class="classifier">tuple of arrays</span></dt><dd><p>Containing X and y from the dataset</p>
+</dd>
+</dl>
+<p>None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IOKR.tests.model.test_model.TestPredict.test_model_return_values">
+<span class="sig-name descname"><span class="pre">test_model_return_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nameTree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Tree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nameSet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataXY</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#IOKR.tests.model.test_model.TestPredict.test_model_return_values" title="Permalink to this definition"></a></dt>
+<dd><p>Tests for the returned values of the modeling function</p>
+<dl class="simple">
+<dt>nameTree<span class="classifier">str</span></dt><dd><p>Name of the tree estimator</p>
+</dd>
+<dt>Tree<span class="classifier">estimator</span></dt><dd><p>estimator to check</p>
+</dd>
+<dt>nameSet<span class="classifier">str</span></dt><dd><p>Name of the dataset</p>
+</dd>
+<dt>dataXY<span class="classifier">tuple of arrays</span></dt><dd><p>Containing X and y from the dataset</p>
+</dd>
+</dl>
+<p>None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IOKR.tests.model.test_model.TestPredict.test_mse">
+<span class="sig-name descname"><span class="pre">test_mse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nameTree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Tree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nameSet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataXY</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#IOKR.tests.model.test_model.TestPredict.test_mse" title="Permalink to this definition"></a></dt>
+<dd><p>Checks the MSE score of the model</p>
+<dl class="simple">
+<dt>nameTree<span class="classifier">str</span></dt><dd><p>Name of the tree estimator</p>
+</dd>
+<dt>Tree<span class="classifier">estimator</span></dt><dd><p>estimator to check</p>
+</dd>
+<dt>nameSet<span class="classifier">str</span></dt><dd><p>Name of the dataset</p>
+</dd>
+<dt>dataXY<span class="classifier">tuple of arrays</span></dt><dd><p>Containing X and y from the dataset</p>
+</dd>
+</dl>
+<p>None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IOKR.tests.model.test_model.TestPredict.test_precision">
+<span class="sig-name descname"><span class="pre">test_precision</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nameTree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Tree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nameSet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataXY</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#IOKR.tests.model.test_model.TestPredict.test_precision" title="Permalink to this definition"></a></dt>
+<dd><p>Tests the precision score
+Parameters
+———-
+nameTree : str</p>
+<blockquote>
+<div><p>Name of the tree estimator</p>
+</div></blockquote>
+<dl class="simple">
+<dt>Tree<span class="classifier">estimator</span></dt><dd><p>estimator to check</p>
+</dd>
+<dt>nameSet<span class="classifier">str</span></dt><dd><p>Name of the dataset</p>
+</dd>
+<dt>dataXY<span class="classifier">tuple of arrays</span></dt><dd><p>Containing X and y from the dataset</p>
+</dd>
+</dl>
+<p>None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IOKR.tests.model.test_model.TestPredict.test_recall">
+<span class="sig-name descname"><span class="pre">test_recall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nameTree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Tree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nameSet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataXY</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#IOKR.tests.model.test_model.TestPredict.test_recall" title="Permalink to this definition"></a></dt>
+<dd><p>Test the recall score</p>
+<dl class="simple">
+<dt>nameTree<span class="classifier">str</span></dt><dd><p>Name of the tree estimator</p>
+</dd>
+<dt>Tree<span class="classifier">estimator</span></dt><dd><p>estimator to check</p>
+</dd>
+<dt>nameSet<span class="classifier">str</span></dt><dd><p>Name of the dataset</p>
+</dd>
+<dt>dataXY<span class="classifier">tuple of arrays</span></dt><dd><p>Containing X and y from the dataset</p>
+</dd>
+</dl>
+<p>None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IOKR.tests.model.test_model.TestPredict.test_time">
+<span class="sig-name descname"><span class="pre">test_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nameTree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Tree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nameSet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataXY</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">L</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#IOKR.tests.model.test_model.TestPredict.test_time" title="Permalink to this definition"></a></dt>
+<dd><p>Test the time for predicting</p>
+<dl class="simple">
+<dt>nameTree<span class="classifier">str</span></dt><dd><p>Name of the tree estimator</p>
+</dd>
+<dt>Tree<span class="classifier">estimator</span></dt><dd><p>estimator to check</p>
+</dd>
+<dt>nameSet<span class="classifier">str</span></dt><dd><p>Name of the dataset</p>
+</dd>
+<dt>dataXY<span class="classifier">tuple of arrays</span></dt><dd><p>Containing X and y from the dataset</p>
+</dd>
+</dl>
+<p>L:</p>
+<p>None</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="IOKR.tests.model.test_model.fitted_predicted_IOKR">
+<span class="sig-prename descclassname"><span class="pre">IOKR.tests.model.test_model.</span></span><span class="sig-name descname"><span class="pre">fitted_predicted_IOKR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">L</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#IOKR.tests.model.test_model.fitted_predicted_IOKR" title="Permalink to this definition"></a></dt>
+<dd><p>Function running IOKR and returning Y_train, Y_test, and Y_preds, for readability purposes</p>
+<dl class="simple">
+<dt>X<span class="classifier">np.ndarray</span></dt><dd><p>features of the dataset</p>
+</dd>
+<dt>y<span class="classifier">np.ndarray</span></dt><dd><p>labels of the dataset</p>
+</dd>
+</dl>
+<p>L :</p>
+<dl class="simple">
+<dt>results<span class="classifier">dict</span></dt><dd><p>contains ‘Y_train’, ‘Y_test’, ‘Y_pred_test’</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="iokr-tests-model-test-utils-module">
-<h2>IOKR.tests.model.test_utils module<a class="headerlink" href="#iokr-tests-model-test-utils-module" title="Permalink to this headline"></a></h2>
+<section id="module-IOKR.tests.model.test_utils">
+<span id="iokr-tests-model-test-utils-module"></span><h2>IOKR.tests.model.test_utils module<a class="headerlink" href="#module-IOKR.tests.model.test_utils" title="Permalink to this headline"></a></h2>
+<p>Test module for model/utils.py</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="IOKR.tests.model.test_utils.TestCreatePathThatDoesntExist">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IOKR.tests.model.test_utils.</span></span><span class="sig-name descname"><span class="pre">TestCreatePathThatDoesntExist</span></span><a class="headerlink" href="#IOKR.tests.model.test_utils.TestCreatePathThatDoesntExist" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Test class for create_path_that_doesnt_exist function</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="IOKR.tests.model.test_utils.TestCreatePathThatDoesntExist.test_path_dir_is_created">
+<span class="sig-name descname"><span class="pre">test_path_dir_is_created</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tmp_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#IOKR.tests.model.test_utils.TestCreatePathThatDoesntExist.test_path_dir_is_created" title="Permalink to this definition"></a></dt>
+<dd><p>test to check if the path dir is created</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="IOKR.tests.model.test_utils.TestProjectRoot">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IOKR.tests.model.test_utils.</span></span><span class="sig-name descname"><span class="pre">TestProjectRoot</span></span><a class="headerlink" href="#IOKR.tests.model.test_utils.TestProjectRoot" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Test class for function project_root</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="IOKR.tests.model.test_utils.TestProjectRoot.test_project_root">
+<span class="sig-name descname"><span class="pre">test_project_root</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#IOKR.tests.model.test_utils.TestProjectRoot.test_project_root" title="Permalink to this definition"></a></dt>
+<dd><p>Test for project_root function</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline"></a></h2>
+<section id="module-IOKR.tests.model">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-IOKR.tests.model" title="Permalink to this headline"></a></h2>
 </section>
 </section>
 
@@ -111,7 +435,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, Florence, Luc, Tamim, Gaëtan, Awais, Danaël.</p>
+    <p>&#169; Copyright 2022, Florence D&#39;Alché  , Luc Motte, Tamim Elahmad, Gaëtan Brison, Awais Sani, Danaël Schlewer-Becker.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

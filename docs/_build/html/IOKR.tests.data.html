@@ -15,6 +15,7 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -48,8 +49,8 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="IOKR.html#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="IOKR.html#iokr-iokr-module">IOKR.iokr module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="IOKR.html#module-contents">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="IOKR.html#module-IOKR.iokr">IOKR.iokr module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="IOKR.html#module-IOKR">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="setup.html">setup module</a></li>
@@ -84,16 +85,97 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="iokr-tests-data-package">
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="iokr-tests-data-package">
 <h1>IOKR.tests.data package<a class="headerlink" href="#iokr-tests-data-package" title="Permalink to this headline"></a></h1>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
 </section>
-<section id="iokr-tests-data-test-load-data-module">
-<h2>IOKR.tests.data.test_load_data module<a class="headerlink" href="#iokr-tests-data-test-load-data-module" title="Permalink to this headline"></a></h2>
+<section id="module-IOKR.tests.data.test_load_data">
+<span id="iokr-tests-data-test-load-data-module"></span><h2>IOKR.tests.data.test_load_data module<a class="headerlink" href="#module-IOKR.tests.data.test_load_data" title="Permalink to this headline"></a></h2>
+<p>Test module for the module: load_data.py</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="IOKR.tests.data.test_load_data.TestLoadBibtex">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IOKR.tests.data.test_load_data.</span></span><span class="sig-name descname"><span class="pre">TestLoadBibtex</span></span><a class="headerlink" href="#IOKR.tests.data.test_load_data.TestLoadBibtex" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Test class for the function: load_bibtex</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="IOKR.tests.data.test_load_data.TestLoadBibtex.test_returned_variables_good_shape">
+<span class="sig-name descname"><span class="pre">test_returned_variables_good_shape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#IOKR.tests.data.test_load_data.TestLoadBibtex.test_returned_variables_good_shape" title="Permalink to this definition"></a></dt>
+<dd><p>Test checking if returned variables from load_bibtex are the expected shape</p>
+<p>None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IOKR.tests.data.test_load_data.TestLoadBibtex.test_returned_variables_good_type">
+<span class="sig-name descname"><span class="pre">test_returned_variables_good_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#IOKR.tests.data.test_load_data.TestLoadBibtex.test_returned_variables_good_type" title="Permalink to this definition"></a></dt>
+<dd><p>Test checking if returned variables from load_bibtex are the expected type</p>
+<p>None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IOKR.tests.data.test_load_data.TestLoadBibtex.test_returned_variables_not_empty">
+<span class="sig-name descname"><span class="pre">test_returned_variables_not_empty</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#IOKR.tests.data.test_load_data.TestLoadBibtex.test_returned_variables_not_empty" title="Permalink to this definition"></a></dt>
+<dd><p>Test checking if returned variables from load_bibtex are not empty</p>
+<p>None</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="IOKR.tests.data.test_load_data.TestLoadCorel5k">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IOKR.tests.data.test_load_data.</span></span><span class="sig-name descname"><span class="pre">TestLoadCorel5k</span></span><a class="headerlink" href="#IOKR.tests.data.test_load_data.TestLoadCorel5k" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Test class for the function: load_corel5k</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="IOKR.tests.data.test_load_data.TestLoadCorel5k.test_returned_variables_good_shape">
+<span class="sig-name descname"><span class="pre">test_returned_variables_good_shape</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#IOKR.tests.data.test_load_data.TestLoadCorel5k.test_returned_variables_good_shape" title="Permalink to this definition"></a></dt>
+<dd><p>Test checking if returned variables from load_corel5k are of expected shape</p>
+<p>None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IOKR.tests.data.test_load_data.TestLoadCorel5k.test_returned_variables_good_type">
+<span class="sig-name descname"><span class="pre">test_returned_variables_good_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#IOKR.tests.data.test_load_data.TestLoadCorel5k.test_returned_variables_good_type" title="Permalink to this definition"></a></dt>
+<dd><p>Test checking if returned variables from load_corel5k are the expected type</p>
+<p>None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="IOKR.tests.data.test_load_data.TestLoadCorel5k.test_returned_variables_not_empty">
+<span class="sig-name descname"><span class="pre">test_returned_variables_not_empty</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#IOKR.tests.data.test_load_data.TestLoadCorel5k.test_returned_variables_not_empty" title="Permalink to this definition"></a></dt>
+<dd><p>Test checking if returned variables from load_corel5k are not empty</p>
+<p>None</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline"></a></h2>
+<section id="module-IOKR.tests.data">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-IOKR.tests.data" title="Permalink to this headline"></a></h2>
 </section>
 </section>
 
@@ -108,7 +190,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, Florence, Luc, Tamim, Gaëtan, Awais, Danaël.</p>
+    <p>&#169; Copyright 2022, Florence D&#39;Alché  , Luc Motte, Tamim Elahmad, Gaëtan Brison, Awais Sani, Danaël Schlewer-Becker.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

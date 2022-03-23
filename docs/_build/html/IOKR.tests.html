@@ -15,6 +15,7 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -48,8 +49,8 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="IOKR.html#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="IOKR.html#iokr-iokr-module">IOKR.iokr module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="IOKR.html#module-contents">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="IOKR.html#module-IOKR.iokr">IOKR.iokr module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="IOKR.html#module-IOKR">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="setup.html">setup module</a></li>
@@ -83,7 +84,31 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="iokr-tests-package">
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="iokr-tests-package">
 <h1>IOKR.tests package<a class="headerlink" href="#iokr-tests-package" title="Permalink to this headline"></a></h1>
 <section id="subpackages">
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline"></a></h2>
@@ -91,26 +116,26 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="IOKR.tests.data.html">IOKR.tests.data package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="IOKR.tests.data.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="IOKR.tests.data.html#iokr-tests-data-test-load-data-module">IOKR.tests.data.test_load_data module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="IOKR.tests.data.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="IOKR.tests.data.html#module-IOKR.tests.data.test_load_data">IOKR.tests.data.test_load_data module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="IOKR.tests.data.html#module-IOKR.tests.data">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="IOKR.tests.model.html">IOKR.tests.model package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="IOKR.tests.model.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="IOKR.tests.model.html#iokr-tests-model-test-model-module">IOKR.tests.model.test_model module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="IOKR.tests.model.html#iokr-tests-model-test-utils-module">IOKR.tests.model.test_utils module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="IOKR.tests.model.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="IOKR.tests.model.html#module-IOKR.tests.model.test_model">IOKR.tests.model.test_model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="IOKR.tests.model.html#module-IOKR.tests.model.test_utils">IOKR.tests.model.test_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="IOKR.tests.model.html#module-IOKR.tests.model">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="IOKR.tests.visualization.html">IOKR.tests.visualization package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="IOKR.tests.visualization.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="IOKR.tests.visualization.html#module-IOKR.tests.visualization">Module contents</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline"></a></h2>
+<section id="module-IOKR.tests">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-IOKR.tests" title="Permalink to this headline"></a></h2>
 </section>
 </section>
 
@@ -125,7 +150,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, Florence, Luc, Tamim, Gaëtan, Awais, Danaël.</p>
+    <p>&#169; Copyright 2022, Florence D&#39;Alché  , Luc Motte, Tamim Elahmad, Gaëtan Brison, Awais Sani, Danaël Schlewer-Becker.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

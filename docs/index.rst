@@ -13,6 +13,19 @@ Welcome to IOKR's documentation!
    modules
 
 
+Test
+**************
+
+Node classification algorithms.
+
+The attribute ``labels_``  assigns a label to each node of the graph.
+
+Model
+--------
+.. autoclass:: IOKR.model.model.IOKR
+.. autoclass:: IOKR.model.model.IOKR.__init__(self)
+
+
 Indices and tables
 ==================
 
