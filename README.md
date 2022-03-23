@@ -121,15 +121,16 @@ You can also post bug reports and feature requests in Github issues. Make sure t
 
 ## References
 
-[1] Céline Brouard, Florence d’Alché-Buc, Marie Szafranski (2013, November). [Semi-supervised Penalized Output Kernel Regression for
+[1] Brouard, C., d'Alché-Buc, F., Szafranski, M. (2013, November). [Semi-supervised Penalized Output Kernel Regression for
 Link Prediction](https://hal.archives-ouvertes.fr/hal-00654123/document). 28th International Conference on Machine Learning (ICML 2011),
 pp.593–600.
 
+[2] Brouard, C., Szafranski, M., d'Alché-Buc, F. (2016). [Input Output Kernel Regression: Supervised and Semi-Supervised Structured Output Prediction with Operator-Valued Kernels](https://hal.archives-ouvertes.fr/hal-01601982/document).  Journal of Machine
+Learning Research, Microtome Publishing.
 
-Refs:
-- Brouard, C., d'Alché-Buc, F., Szafranski, M. Semi-supervised Penalized Output Kernel Regression for Link Prediction, ICML 2011: 593-600, (2011).
-- Brouard, C., Szafranski, M., d'Alché-Buc, F.Input Output Kernel Regression: Supervised and Semi-Supervised Structured Output Prediction with Operator-Valued Kernels. J. Mach. Learn. Res. 17: 176:1-176:48 (2016).
-- Brouard, C., Shen, H., Dührkop, K., d'Alché-Buc, F., Böcker, S., & Rousu, J. (2016). Fast metabolite identification with input output kernel regression. Bioinformatics, 32(12), i28-i36 (2016).
+[3] Brouard, C., Shen, H., Dührkop, K., d'Alché-Buc, F., Böcker, S., & Rousu, J. [Fast metabolite identification with input output kernel regression](https://hal.inrae.fr/hal-02637720/document).  Bioinformatics, Oxford University
+Press (OUP)
+
 
 
 ![alt text](images/readme_iokr_equations.png)
