@@ -128,7 +128,7 @@ pp.593–600.
 [2] Brouard, C., Szafranski, M., d'Alché-Buc, F. (2016). [Input Output Kernel Regression: Supervised and Semi-Supervised Structured Output Prediction with Operator-Valued Kernels](https://hal.archives-ouvertes.fr/hal-01601982/document).  Journal of Machine
 Learning Research, Microtome Publishing.
 
-[3] Brouard, C., Shen, H., Dührkop, K., d'Alché-Buc, F., Böcker, S., & Rousu, J. [Fast metabolite identification with input output kernel regression](https://hal.inrae.fr/hal-02637720/document).  Bioinformatics, Oxford University
+[3] Brouard, C., Shen, H., Dührkop, K., d'Alché-Buc, F., Böcker, S., & Rousu, J. (2016) [Fast metabolite identification with input output kernel regression](https://hal.inrae.fr/hal-02637720/document).  Bioinformatics, Oxford University
 Press (OUP)
 
 
