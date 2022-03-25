@@ -16,6 +16,8 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -119,7 +121,53 @@
 <dt class="sig sig-object py" id="IOKR.model.model.IOKR">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IOKR.model.model.</span></span><span class="sig-name descname"><span class="pre">IOKR</span></span><a class="headerlink" href="#IOKR.model.model.IOKR" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Class used to apply Input and Output Kernel Regression</p>
+<p>Spectral embedding of graphs, based the spectral decomposition of the Laplacian matrix <span class="math notranslate nohighlight">\(L = D - A\)</span>
+or the transition matrix of the random walk <span class="math notranslate nohighlight">\(P = D^{-1}A\)</span> (default), where <span class="math notranslate nohighlight">\(D\)</span> is the
+diagonal matrix of degrees.
+Eigenvectors are considered in increasing order (for the Laplacian matrix <span class="math notranslate nohighlight">\(L\)</span>) or decreasing order
+(for the transition matrix of the random walk <span class="math notranslate nohighlight">\(P\)</span>) of eigenvalues, skipping the first.
+Parameters
+———-
+n_components : int (default = <code class="docutils literal notranslate"><span class="pre">2</span></code>)</p>
+<blockquote>
+<div><p>Dimension of the embedding space.</p>
+</div></blockquote>
+<dl>
+<dt>decomposition<span class="classifier">str (<code class="docutils literal notranslate"><span class="pre">laplacian</span></code> or <code class="docutils literal notranslate"><span class="pre">rw</span></code>, default = <code class="docutils literal notranslate"><span class="pre">rw</span></code>)</span></dt><dd><p>Matrix used for the spectral decomposition.</p>
+</dd>
+<dt>regularization<span class="classifier">float (default = <code class="docutils literal notranslate"><span class="pre">-1</span></code>)</span></dt><dd><p>Regularization factor <span class="math notranslate nohighlight">\(\alpha\)</span> so that the adjacency matrix is <span class="math notranslate nohighlight">\(A + \alpha \frac{11^T}{n}\)</span>.
+If negative, regularization is applied only if the graph is disconnected; the regularization factor
+<span class="math notranslate nohighlight">\(\alpha\)</span> is then set to the absolute value of the parameter.</p>
+</dd>
+<dt>normalized<span class="classifier">bool (default = <code class="docutils literal notranslate"><span class="pre">True</span></code>)</span></dt><dd><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code>, normalized the embedding so that each vector has norm 1 in the embedding space, i.e.,
+each vector lies on the unit sphere.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt><a href="#id1"><span class="problematic" id="id2">embedding_</span></a><span class="classifier">array, shape = (n, n_components)</span></dt><dd><p>Embedding of the nodes.</p>
+</dd>
+<dt><a href="#id3"><span class="problematic" id="id4">embedding_row_</span></a><span class="classifier">array, shape = (n_row, n_components)</span></dt><dd><p>Embedding of the rows, for bipartite graphs.</p>
+</dd>
+<dt><a href="#id5"><span class="problematic" id="id6">embedding_col_</span></a><span class="classifier">array, shape = (n_col, n_components)</span></dt><dd><p>Embedding of the columns, for bipartite graphs.</p>
+</dd>
+<dt><a href="#id7"><span class="problematic" id="id8">eigenvalues_</span></a><span class="classifier">array, shape = (n_components)</span></dt><dd><p>Eigenvalues.</p>
+</dd>
+<dt><a href="#id9"><span class="problematic" id="id10">eigenvectors_</span></a><span class="classifier">array, shape = (n, n_components)</span></dt><dd><p>Eigenvectors.</p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sknetwork.embedding</span> <span class="kn">import</span> <span class="n">Spectral</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sknetwork.data</span> <span class="kn">import</span> <span class="n">karate_club</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spectral</span> <span class="o">=</span> <span class="n">Spectral</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">adjacency</span> <span class="o">=</span> <span class="n">karate_club</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">embedding</span> <span class="o">=</span> <span class="n">spectral</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">adjacency</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">embedding</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(34, 3)</span>
+<span class="go">References</span>
+<span class="go">----------</span>
+<span class="go">Belkin, M. &amp; Niyogi, P. (2003). Laplacian Eigenmaps for Dimensionality Reduction and Data Representation,</span>
+<span class="go">Neural computation.</span>
+</pre></div>
+</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="IOKR.model.model.IOKR.alpha">
 <span class="sig-name descname"><span class="pre">alpha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#IOKR.model.model.IOKR.alpha" title="Permalink to this definition"></a></dt>

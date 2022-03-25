@@ -7,23 +7,16 @@ Welcome to IOKR's documentation!
 ================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
    :caption: Contents:
 
    modules
 
 
-Classification
-**************
 
-Node classification algorithms.
 
-The attribute ``labels_``  assigns a label to each node of the graph.
 
-PageRank
---------
-.. autoclass:: IOKR.model.model.IOKR
-.. autoclass:: IOKR.model.model.IOKR.__init__(self)
+
 
 
 Indices and tables
