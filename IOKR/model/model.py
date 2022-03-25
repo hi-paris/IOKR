@@ -27,7 +27,50 @@ Created on December 12, 2021
 
 
 class IOKR:
-
+    """Spectral embedding of graphs, based the spectral decomposition of the Laplacian matrix :math:`L = D - A`
+    or the transition matrix of the random walk :math:`P = D^{-1}A` (default), where :math:`D` is the
+    diagonal matrix of degrees.
+    Eigenvectors are considered in increasing order (for the Laplacian matrix :math:`L`) or decreasing order
+    (for the transition matrix of the random walk :math:`P`) of eigenvalues, skipping the first.
+    Parameters
+    ----------
+    n_components : int (default = ``2``)
+        Dimension of the embedding space.
+    decomposition : str (``laplacian`` or ``rw``, default = ``rw``)
+        Matrix used for the spectral decomposition.
+    regularization : float (default = ``-1``)
+        Regularization factor :math:`\\alpha` so that the adjacency matrix is :math:`A + \\alpha \\frac{11^T}{n}`.
+        If negative, regularization is applied only if the graph is disconnected; the regularization factor
+        :math:`\\alpha` is then set to the absolute value of the parameter.
+    normalized : bool (default = ``True``)
+        If ``True``, normalized the embedding so that each vector has norm 1 in the embedding space, i.e.,
+        each vector lies on the unit sphere.
+    Attributes
+    ----------
+    embedding_ : array, shape = (n, n_components)
+        Embedding of the nodes.
+    embedding_row_ : array, shape = (n_row, n_components)
+        Embedding of the rows, for bipartite graphs.
+    embedding_col_ : array, shape = (n_col, n_components)
+        Embedding of the columns, for bipartite graphs.
+    eigenvalues_ : array, shape = (n_components)
+        Eigenvalues.
+    eigenvectors_ : array, shape = (n, n_components)
+        Eigenvectors.
+    Example
+    -------
+    >>> from sknetwork.embedding import Spectral
+    >>> from sknetwork.data import karate_club
+    >>> spectral = Spectral(n_components=3)
+    >>> adjacency = karate_club()
+    >>> embedding = spectral.fit_transform(adjacency)
+    >>> embedding.shape
+    (34, 3)
+    References
+    ----------
+    Belkin, M. & Niyogi, P. (2003). Laplacian Eigenmaps for Dimensionality Reduction and Data Representation,
+    Neural computation.
+    """
 #    @profile
     def __init__(self):
         """
