@@ -27,7 +27,13 @@ Created on December 12, 2021
 
 
 class IOKR:
+<<<<<<< HEAD
 
+=======
+    """
+    Class used to apply Input and Output Kernel Regression
+    """
+>>>>>>> parent of 23d9958 (DOCUMENTATION)
 #    @profile
     def __init__(self):
         """
