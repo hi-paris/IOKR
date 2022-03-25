@@ -1,0 +1,658 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IOKR.tests.model.test_model &#8212; IOKR  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/alabaster.css" />
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for IOKR.tests.model.test_model</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Tests for model/model.py</span>
+<span class="sd">Documentation in progress </span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">from</span> <span class="nn">IOKR.data.load_data</span> <span class="kn">import</span> <span class="n">load_bibtex</span><span class="p">,</span> <span class="n">load_corel5k</span>
+<span class="kn">from</span> <span class="nn">IOKR.model.utils</span> <span class="kn">import</span> <span class="n">project_root</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">f1_score</span><span class="p">,</span> <span class="n">recall_score</span><span class="p">,</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">accuracy_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span> <span class="k">as</span> <span class="n">MSE</span>
+<span class="kn">from</span> <span class="nn">sklearn.utils.estimator_checks</span> <span class="kn">import</span> <span class="n">check_estimator</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
+<span class="kn">from</span> <span class="nn">sklearn.utils.validation</span> <span class="kn">import</span> <span class="n">check_is_fitted</span><span class="p">,</span> <span class="n">check_X_y</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.exceptions</span> <span class="kn">import</span> <span class="n">NotFittedError</span>
+<span class="kn">from</span> <span class="nn">IOKR.model.model</span> <span class="kn">import</span> <span class="n">IOKR</span> <span class="k">as</span> <span class="n">iokr</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">sklearn.utils._testing</span> <span class="kn">import</span> <span class="n">assert_array_equal</span>
+<span class="kn">from</span> <span class="nn">sklearn.utils._testing</span> <span class="kn">import</span> <span class="n">assert_array_almost_equal</span>
+<span class="kn">from</span> <span class="nn">sklearn.utils._testing</span> <span class="kn">import</span> <span class="n">assert_almost_equal</span>
+
+<span class="c1"># Estimators to check</span>
+<span class="n">ESTIMATORS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;IOKR&quot;</span><span class="p">:</span> <span class="n">iokr</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># Datasets used</span>
+<span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Datasets used</span>
+<span class="n">bibtex</span> <span class="o">=</span> <span class="n">load_bibtex</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">project_root</span><span class="p">(),</span> <span class="s2">&quot;data/bibtex&quot;</span><span class="p">))</span>
+<span class="n">corel5k</span> <span class="o">=</span> <span class="n">load_corel5k</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">project_root</span><span class="p">(),</span> <span class="s2">&quot;data/corel5k&quot;</span><span class="p">))</span>
+
+<span class="n">DATASETS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;bibtex&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;X&#39;</span><span class="p">:</span> <span class="n">bibtex</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;Y&#39;</span><span class="p">:</span> <span class="n">bibtex</span><span class="p">[</span><span class="mi">1</span><span class="p">]},</span>
+    <span class="s2">&quot;corel5K&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;X&#39;</span><span class="p">:</span> <span class="n">corel5k</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;Y&#39;</span><span class="p">:</span> <span class="n">corel5k</span><span class="p">[</span><span class="mi">1</span><span class="p">]},</span>
+    <span class="c1"># &quot;iris&quot;: {&#39;X&#39;: iris[0], &#39;Y&#39;: iris[1]},</span>
+<span class="p">}</span>
+
+
+<span class="c1"># @pytest.mark.parametrize(&quot;nameSet, dataXY&quot;, DATASETS.items())</span>
+<span class="c1"># def test_X_y(nameSet, dataXY):</span>
+<span class="c1">#    &quot;&quot;&quot;Input validation for standard estimators.</span>
+<span class="c1">#</span>
+<span class="c1">#    Checks X and y for consistent length, enforces X to be 2D and y 1D.</span>
+<span class="c1">#    By default, X is checked to be non-empty and containing only finite values.</span>
+<span class="c1">#    Standard input checks are also applied to y,</span>
+<span class="c1">#    such as checking that y does not have np.nan or np.inf targets.</span>
+<span class="c1">#</span>
+<span class="c1">#    Returns</span>
+<span class="c1">#    -------</span>
+<span class="c1">#    None</span>
+<span class="c1">#    &quot;&quot;&quot;</span>
+<span class="c1">#    check_X_y(dataXY[&quot;X&quot;], dataXY[&quot;Y&quot;])</span>
+
+
+<div class="viewcode-block" id="fitted_predicted_IOKR"><a class="viewcode-back" href="../../../../IOKR.tests.model.html#IOKR.tests.model.test_model.fitted_predicted_IOKR">[docs]</a><span class="k">def</span> <span class="nf">fitted_predicted_IOKR</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span> <span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Function running IOKR and returning Y_train, Y_test, and Y_preds, for readability purposes</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    X : np.ndarray</span>
+<span class="sd">        features of the dataset</span>
+<span class="sd">    y : np.ndarray</span>
+<span class="sd">        labels of the dataset</span>
+<span class="sd">    L :</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    results : dict</span>
+<span class="sd">        contains &#39;Y_train&#39;, &#39;Y_test&#39;, &#39;Y_pred_test&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">,</span> <span class="n">Y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.33</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">clf</span> <span class="o">=</span> <span class="n">iokr</span><span class="p">()</span>
+    <span class="n">clf</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="n">Y_train</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="n">L</span><span class="p">)</span>
+    <span class="n">Y_pred_test</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="o">=</span><span class="n">X_test</span><span class="p">,</span> <span class="n">Y_candidates</span><span class="o">=</span><span class="n">Y_test</span><span class="p">)</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Y_train&#39;</span><span class="p">:</span> <span class="n">Y_train</span><span class="p">,</span>
+               <span class="s1">&#39;Y_test&#39;</span><span class="p">:</span> <span class="n">Y_test</span><span class="p">,</span>
+               <span class="s1">&#39;Y_pred_test&#39;</span><span class="p">:</span> <span class="n">Y_pred_test</span><span class="p">}</span>
+    <span class="k">return</span> <span class="n">results</span></div>
+
+
+<div class="viewcode-block" id="TestFit"><a class="viewcode-back" href="../../../../IOKR.tests.model.html#IOKR.tests.model.test_model.TestFit">[docs]</a><span class="k">class</span> <span class="nc">TestFit</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    class for the tests concerning .fit()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TestFit.test_verbose"><a class="viewcode-back" href="../../../../IOKR.tests.model.html#IOKR.tests.model.test_model.TestFit.test_verbose">[docs]</a>    <span class="k">def</span> <span class="nf">test_verbose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">capfd</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Test if fit function actually prints something</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        capfd: fixture</span>
+<span class="sd">        Allows access to stdout/stderr output created</span>
+<span class="sd">        during test execution.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="sd">&quot;&quot;&quot;Test if fit function actually prints something&quot;&quot;&quot;</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="n">fitted_predicted_IOKR</span><span class="p">(</span><span class="n">DATASETS</span><span class="p">[</span><span class="s1">&#39;bibtex&#39;</span><span class="p">][</span><span class="s1">&#39;X&#39;</span><span class="p">],</span> <span class="n">DATASETS</span><span class="p">[</span><span class="s1">&#39;bibtex&#39;</span><span class="p">][</span><span class="s1">&#39;Y&#39;</span><span class="p">],</span> <span class="n">L</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">)</span>
+        <span class="n">out</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">capfd</span><span class="o">.</span><span class="n">readouterr</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="n">err</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">err</span><span class="si">}</span><span class="s1">: need to be fixed&#39;</span>
+        <span class="k">assert</span> <span class="n">out</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Fitting Time should have been printed &#39;</span></div>
+
+<div class="viewcode-block" id="TestFit.test_time"><a class="viewcode-back" href="../../../../IOKR.tests.model.html#IOKR.tests.model.test_model.TestFit.test_time">[docs]</a>    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;nameSet, dataXY&quot;</span><span class="p">,</span> <span class="n">DATASETS</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;nameTree, Tree&quot;</span><span class="p">,</span> <span class="n">ESTIMATORS</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="k">def</span> <span class="nf">test_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nameTree</span><span class="p">,</span> <span class="n">Tree</span><span class="p">,</span> <span class="n">nameSet</span><span class="p">,</span> <span class="n">dataXY</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Test the time for fitting</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        nameTree : str</span>
+<span class="sd">            Name of the tree estimator</span>
+<span class="sd">        Tree : estimator</span>
+<span class="sd">            estimator to check</span>
+<span class="sd">        nameSet : str</span>
+<span class="sd">            Name of the dataset</span>
+<span class="sd">        dataXY : tuple of arrays</span>
+<span class="sd">            Containing X and y from the dataset</span>
+<span class="sd">        L:</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">,</span> <span class="n">Y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">dataXY</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">],</span> <span class="n">dataXY</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">],</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.33</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+        <span class="n">clf</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">()</span>
+        <span class="n">clf</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="n">Y_train</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="n">L</span><span class="p">,</span> <span class="p">)</span>
+        <span class="n">fit_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
+        <span class="k">assert</span> <span class="n">fit_time</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Failed with </span><span class="si">{</span><span class="n">nameTree</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">nameSet</span><span class="si">}</span><span class="s1">: &quot;fit_time&quot; is over 100 seconds&#39;</span></div>
+
+<div class="viewcode-block" id="TestFit.test_fit_fits"><a class="viewcode-back" href="../../../../IOKR.tests.model.html#IOKR.tests.model.test_model.TestFit.test_fit_fits">[docs]</a>    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;nameSet, dataXY&quot;</span><span class="p">,</span> <span class="n">DATASETS</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;nameTree, Tree&quot;</span><span class="p">,</span> <span class="n">ESTIMATORS</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="k">def</span> <span class="nf">test_fit_fits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nameTree</span><span class="p">,</span> <span class="n">Tree</span><span class="p">,</span> <span class="n">nameSet</span><span class="p">,</span> <span class="n">dataXY</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Checks that using the .fit() function actually fit the estimator</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        nameTree : str</span>
+<span class="sd">            Name of the tree estimator</span>
+<span class="sd">        Tree : estimator</span>
+<span class="sd">            estimator to check</span>
+<span class="sd">        nameSet : str</span>
+<span class="sd">            Name of the dataset</span>
+<span class="sd">        dataXY : tuple of arrays</span>
+<span class="sd">            Containing X and y from the dataset</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">,</span> <span class="n">Y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">dataXY</span><span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">],</span> <span class="n">dataXY</span><span class="p">[</span><span class="s2">&quot;Y&quot;</span><span class="p">],</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.33</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+        <span class="n">clf1</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">()</span>
+        <span class="n">clf1</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="n">NotFittedError</span><span class="p">):</span>
+            <span class="n">check_is_fitted</span><span class="p">(</span><span class="n">clf1</span><span class="p">)</span>
+        <span class="n">clf2</span> <span class="o">=</span> <span class="n">clf1</span>
+        <span class="n">clf2</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="n">Y_train</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">clf1</span><span class="p">,</span> <span class="n">clf2</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Failed with </span><span class="si">{</span><span class="n">nameTree</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">nameSet</span><span class="si">}</span><span class="s2">: &#39;clf&#39; should be fitted after fitting&quot;</span></div>
+
+<div class="viewcode-block" id="TestFit.test_numerical_stability"><a class="viewcode-back" href="../../../../IOKR.tests.model.html#IOKR.tests.model.test_model.TestFit.test_numerical_stability">[docs]</a>    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;nameTree, Tree&quot;</span><span class="p">,</span> <span class="n">ESTIMATORS</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="k">def</span> <span class="nf">test_numerical_stability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nameTree</span><span class="p">,</span> <span class="n">Tree</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check numerical stability</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        nameTree : str</span>
+<span class="sd">            Name of the tree estimator</span>
+<span class="sd">        Tree : estimator</span>
+<span class="sd">            estimator to check</span>
+<span class="sd">        L:</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+            <span class="p">[</span><span class="mf">152.08097839</span><span class="p">,</span> <span class="mf">140.40744019</span><span class="p">,</span> <span class="mf">129.75102234</span><span class="p">,</span> <span class="mf">159.90493774</span><span class="p">],</span>
+            <span class="p">[</span><span class="mf">142.50700378</span><span class="p">,</span> <span class="mf">135.81935120</span><span class="p">,</span> <span class="mf">117.82884979</span><span class="p">,</span> <span class="mf">162.75781250</span><span class="p">],</span>
+            <span class="p">[</span><span class="mf">127.28772736</span><span class="p">,</span> <span class="mf">140.40744019</span><span class="p">,</span> <span class="mf">129.75102234</span><span class="p">,</span> <span class="mf">159.90493774</span><span class="p">],</span>
+            <span class="p">[</span><span class="mf">132.37025452</span><span class="p">,</span> <span class="mf">143.71923828</span><span class="p">,</span> <span class="mf">138.35694885</span><span class="p">,</span> <span class="mf">157.84558105</span><span class="p">],</span>
+            <span class="p">[</span><span class="mf">103.10237122</span><span class="p">,</span> <span class="mf">143.71928406</span><span class="p">,</span> <span class="mf">138.35696411</span><span class="p">,</span> <span class="mf">157.84559631</span><span class="p">],</span>
+            <span class="p">[</span><span class="mf">127.71276855</span><span class="p">,</span> <span class="mf">143.71923828</span><span class="p">,</span> <span class="mf">138.35694885</span><span class="p">,</span> <span class="mf">157.84558105</span><span class="p">],</span>
+            <span class="p">[</span><span class="mf">120.91514587</span><span class="p">,</span> <span class="mf">140.40744019</span><span class="p">,</span> <span class="mf">129.75102234</span><span class="p">,</span> <span class="mf">159.90493774</span><span class="p">]])</span>
+
+        <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.70209277</span><span class="p">,</span> <span class="mf">0.53896582</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.90914464</span><span class="p">,</span> <span class="mf">0.48026916</span><span class="p">,</span> <span class="mf">0.49622521</span><span class="p">])</span>
+
+        <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="nb">all</span><span class="o">=</span><span class="s2">&quot;raise&quot;</span><span class="p">):</span>
+            <span class="n">reg</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">()</span>
+            <span class="n">reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="n">L</span><span class="p">,</span> <span class="p">)</span>
+            <span class="n">reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="o">-</span><span class="n">y</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="n">L</span><span class="p">,</span> <span class="p">)</span>
+            <span class="n">reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="o">-</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="n">L</span><span class="p">,</span> <span class="p">)</span>
+            <span class="n">reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="o">-</span><span class="n">X</span><span class="p">,</span> <span class="o">-</span><span class="n">y</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="n">L</span><span class="p">,</span> <span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestFit.test_raise_error_on_1d_input"><a class="viewcode-back" href="../../../../IOKR.tests.model.html#IOKR.tests.model.test_model.TestFit.test_raise_error_on_1d_input">[docs]</a>    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;nameTree, Tree&quot;</span><span class="p">,</span> <span class="n">ESTIMATORS</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="k">def</span> <span class="nf">test_raise_error_on_1d_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nameTree</span><span class="p">,</span> <span class="n">Tree</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span> <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Test that an error is raised when X or Y are 1D arrays</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        nameTree : str</span>
+<span class="sd">            Name of the tree estimator</span>
+<span class="sd">        Tree : estimator</span>
+<span class="sd">            estimator to check</span>
+<span class="sd">        L:</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">Xt</span> <span class="o">=</span> <span class="n">DATASETS</span><span class="p">[</span><span class="s1">&#39;bibtex&#39;</span><span class="p">][</span><span class="s1">&#39;X&#39;</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+        <span class="n">Xt_2d</span> <span class="o">=</span> <span class="n">DATASETS</span><span class="p">[</span><span class="s1">&#39;bibtex&#39;</span><span class="p">][</span><span class="s1">&#39;X&#39;</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">yt</span> <span class="o">=</span> <span class="n">DATASETS</span><span class="p">[</span><span class="s1">&#39;bibtex&#39;</span><span class="p">][</span><span class="s1">&#39;Y&#39;</span><span class="p">]</span>
+
+        <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+            <span class="n">Tree</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">Xt</span><span class="p">,</span> <span class="n">yt</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="n">L</span><span class="p">,</span> <span class="p">)</span>
+
+        <span class="n">Tree</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">Xt_2d</span><span class="p">,</span> <span class="n">yt</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="n">L</span><span class="p">,</span> <span class="p">)</span>
+        <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+            <span class="n">Tree</span><span class="p">()</span><span class="o">.</span><span class="n">predict</span><span class="p">([</span><span class="n">Xt</span><span class="p">],</span> <span class="n">yt</span><span class="p">)</span></div></div>
+
+<span class="c1">#    @pytest.mark.parametrize(&quot;nameTree, Tree&quot;, ESTIMATORS.items())</span>
+<span class="c1">#    def test_warning_on_big_input(self, nameTree, Tree, L=1e-5, ):</span>
+<span class="c1">#        &quot;&quot;&quot;Test if the warning for too large inputs is appropriate</span>
+<span class="c1">#</span>
+<span class="c1">#        Parameters</span>
+<span class="c1">#        ----------</span>
+<span class="c1">#        nameTree : str</span>
+<span class="c1">#            Name of the tree estimator</span>
+<span class="c1">#        Tree : estimator</span>
+<span class="c1">#            estimator to check</span>
+<span class="c1">#        L:</span>
+<span class="c1">#</span>
+<span class="c1">#        Returns</span>
+<span class="c1">#        -------</span>
+<span class="c1">#        None</span>
+<span class="c1">#        &quot;&quot;&quot;</span>
+<span class="c1">#        Xt = np.repeat(10 ** 40., 4).astype(np.float64).reshape(-1, 1)</span>
+<span class="c1">#        clf = Tree()</span>
+<span class="c1">#        try:</span>
+<span class="c1">#            clf.fit(Xt, [0, 1, 0, 1], L=L, )</span>
+<span class="c1">#        except ValueError as e:</span>
+<span class="c1">#            assert &quot;float32&quot; in str(e)</span>
+
+
+<div class="viewcode-block" id="TestPredict"><a class="viewcode-back" href="../../../../IOKR.tests.model.html#IOKR.tests.model.test_model.TestPredict">[docs]</a><span class="k">class</span> <span class="nc">TestPredict</span><span class="p">:</span>
+
+<div class="viewcode-block" id="TestPredict.test_model_return_values"><a class="viewcode-back" href="../../../../IOKR.tests.model.html#IOKR.tests.model.test_model.TestPredict.test_model_return_values">[docs]</a>    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;nameSet, dataXY&quot;</span><span class="p">,</span> <span class="n">DATASETS</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;nameTree, Tree&quot;</span><span class="p">,</span> <span class="n">ESTIMATORS</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="k">def</span> <span class="nf">test_model_return_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nameTree</span><span class="p">,</span> <span class="n">Tree</span><span class="p">,</span> <span class="n">nameSet</span><span class="p">,</span> <span class="n">dataXY</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Tests for the returned values of the modeling function</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        nameTree : str</span>
+<span class="sd">            Name of the tree estimator</span>
+<span class="sd">        Tree : estimator</span>
+<span class="sd">            estimator to check</span>
+<span class="sd">        nameSet : str</span>
+<span class="sd">            Name of the dataset</span>
+<span class="sd">        dataXY : tuple of arrays</span>
+<span class="sd">            Containing X and y from the dataset</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">returned_IOKR</span> <span class="o">=</span> <span class="n">fitted_predicted_IOKR</span><span class="p">(</span><span class="n">dataXY</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">],</span> <span class="n">dataXY</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">],</span> <span class="n">L</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span> <span class="p">)</span>
+        <span class="c1"># Check returned arrays&#39; type</span>
+        <span class="k">assert</span> <span class="n">returned_IOKR</span><span class="p">[</span><span class="s1">&#39;Y_train&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">size</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Failed with </span><span class="si">{name}</span><span class="s2">:&#39;Y_train&#39; is empty&quot;</span>
+        <span class="k">assert</span> <span class="n">returned_IOKR</span><span class="p">[</span><span class="s1">&#39;Y_test&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">size</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Failed with </span><span class="si">{name}</span><span class="s2">:&#39;Y_test&#39; is empty&quot;</span>
+        <span class="k">assert</span> <span class="n">returned_IOKR</span><span class="p">[</span><span class="s1">&#39;Y_pred_test&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">size</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Failed with </span><span class="si">{name}</span><span class="s2">:&#39;Y_pred_test&#39; is empty&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">returned_IOKR</span><span class="p">[</span><span class="s1">&#39;Y_train&#39;</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">),</span> \
+            <span class="sa">f</span><span class="s2">&quot;Failed with </span><span class="si">{</span><span class="n">nameTree</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">nameSet</span><span class="si">}</span><span class="s2">:&#39;Y_train&#39; should be a &#39;np.ndarray, but is </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">returned_IOKR</span><span class="p">[</span><span class="s1">&#39;Y_train&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">returned_IOKR</span><span class="p">[</span><span class="s1">&#39;Y_test&#39;</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">),</span> \
+            <span class="sa">f</span><span class="s2">&quot;Failed with </span><span class="si">{</span><span class="n">nameTree</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">nameSet</span><span class="si">}</span><span class="s2">:&#39;Y_test&#39; should be a &#39;np.ndarray, but is </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">returned_IOKR</span><span class="p">[</span><span class="s1">&#39;Y_test&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">returned_IOKR</span><span class="p">[</span><span class="s1">&#39;Y_pred_test&#39;</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">),</span> \
+            <span class="sa">f</span><span class="s2">&quot;Failed with </span><span class="si">{</span><span class="n">nameTree</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">nameSet</span><span class="si">}</span><span class="s2">:&#39;Y_pred_test&#39; should be a &#39;np.ndarray, but is </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">returned_IOKR</span><span class="p">[</span><span class="s1">&#39;Y_pred_test&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+<div class="viewcode-block" id="TestPredict.test_model_return_object"><a class="viewcode-back" href="../../../../IOKR.tests.model.html#IOKR.tests.model.test_model.TestPredict.test_model_return_object">[docs]</a>    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;nameSet, dataXY&quot;</span><span class="p">,</span> <span class="n">DATASETS</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;nameTree, Tree&quot;</span><span class="p">,</span> <span class="n">ESTIMATORS</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="k">def</span> <span class="nf">test_model_return_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nameTree</span><span class="p">,</span> <span class="n">Tree</span><span class="p">,</span> <span class="n">nameSet</span><span class="p">,</span> <span class="n">dataXY</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Tests the returned object of the modeling function</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        nameTree : str</span>
+<span class="sd">            Name of the tree estimator</span>
+<span class="sd">        Tree : estimator</span>
+<span class="sd">            estimator to check</span>
+<span class="sd">        nameSet : str</span>
+<span class="sd">            Name of the dataset</span>
+<span class="sd">        dataXY : tuple of arrays</span>
+<span class="sd">            Containing X and y from the dataset</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">returned_IOKR</span> <span class="o">=</span> <span class="n">fitted_predicted_IOKR</span><span class="p">(</span><span class="n">dataXY</span><span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">],</span> <span class="n">dataXY</span><span class="p">[</span><span class="s2">&quot;Y&quot;</span><span class="p">],</span> <span class="n">L</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span> <span class="p">)</span>
+        <span class="c1"># Check the return object type</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">returned_IOKR</span><span class="p">,</span>
+                          <span class="nb">dict</span><span class="p">),</span> <span class="sa">f</span><span class="s1">&#39;Failed with </span><span class="si">{</span><span class="n">nameTree</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">nameSet</span><span class="si">}</span><span class="s1">:&#39;</span> \
+                                 <span class="sa">f</span><span class="s1">&#39;&quot;returned_IOKR&quot; should be a dict, &#39;</span> \
+                                 <span class="sa">f</span><span class="s1">&#39;but instead is a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">returned_IOKR</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="c1"># Check the length of the returned object</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span>
+            <span class="n">returned_IOKR</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Failed with </span><span class="si">{</span><span class="n">nameTree</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">nameSet</span><span class="si">}</span><span class="s1">:&#39;</span> \
+                                 <span class="sa">f</span><span class="s1">&#39;&quot;returned_IOKR&quot; should have a length of 3, &#39;</span> \
+                                 <span class="sa">f</span><span class="s1">&#39;but instead it is </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">returned_IOKR</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span></div>
+
+<div class="viewcode-block" id="TestPredict.test_bad_X_y_inputation"><a class="viewcode-back" href="../../../../IOKR.tests.model.html#IOKR.tests.model.test_model.TestPredict.test_bad_X_y_inputation">[docs]</a>    <span class="k">def</span> <span class="nf">test_bad_X_y_inputation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Tests for raised exceptions (To complete)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># ValueError</span>
+        <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+            <span class="c1"># Insert a np.nan into the X array</span>
+            <span class="n">Xt</span><span class="p">,</span> <span class="n">yt</span> <span class="o">=</span> <span class="n">DATASETS</span><span class="p">[</span><span class="s1">&#39;bibtex&#39;</span><span class="p">][</span><span class="s1">&#39;X&#39;</span><span class="p">],</span> <span class="n">DATASETS</span><span class="p">[</span><span class="s1">&#39;bibtex&#39;</span><span class="p">][</span><span class="s1">&#39;Y&#39;</span><span class="p">]</span>
+            <span class="n">Xt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="n">scores</span> <span class="o">=</span> <span class="n">fitted_predicted_IOKR</span><span class="p">(</span><span class="n">Xt</span><span class="p">,</span> <span class="n">yt</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span> <span class="p">)</span>
+        <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+            <span class="c1"># Insert a np.nan into the y array</span>
+            <span class="n">Xt</span><span class="p">,</span> <span class="n">yt</span> <span class="o">=</span> <span class="n">DATASETS</span><span class="p">[</span><span class="s1">&#39;bibtex&#39;</span><span class="p">][</span><span class="s1">&#39;X&#39;</span><span class="p">],</span> <span class="n">DATASETS</span><span class="p">[</span><span class="s1">&#39;bibtex&#39;</span><span class="p">][</span><span class="s1">&#39;Y&#39;</span><span class="p">]</span>
+            <span class="n">yt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="n">scores</span> <span class="o">=</span> <span class="n">fitted_predicted_IOKR</span><span class="p">(</span><span class="n">Xt</span><span class="p">,</span> <span class="n">yt</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span> <span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exception</span><span class="p">:</span>
+            <span class="c1"># Insert a string into the X array</span>
+            <span class="n">Xt</span><span class="p">,</span> <span class="n">yt</span> <span class="o">=</span> <span class="n">DATASETS</span><span class="p">[</span><span class="s1">&#39;bibtex&#39;</span><span class="p">][</span><span class="s1">&#39;X&#39;</span><span class="p">],</span> <span class="n">DATASETS</span><span class="p">[</span><span class="s1">&#39;bibtex&#39;</span><span class="p">][</span><span class="s1">&#39;Y&#39;</span><span class="p">]</span>
+            <span class="n">Xt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;A string&quot;</span>
+            <span class="n">scores</span> <span class="o">=</span> <span class="n">fitted_predicted_IOKR</span><span class="p">(</span><span class="n">Xt</span><span class="p">,</span> <span class="n">yt</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span> <span class="p">)</span>
+            <span class="k">assert</span> <span class="s2">&quot;could not convert string to float&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">exception</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="c1"># Test that it handles the case of: X is a string</span>
+        <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+            <span class="n">Xt</span><span class="p">,</span> <span class="n">yt</span> <span class="o">=</span> <span class="n">DATASETS</span><span class="p">[</span><span class="s1">&#39;bibtex&#39;</span><span class="p">][</span><span class="s1">&#39;X&#39;</span><span class="p">],</span> <span class="n">DATASETS</span><span class="p">[</span><span class="s1">&#39;bibtex&#39;</span><span class="p">][</span><span class="s1">&#39;Y&#39;</span><span class="p">]</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">fitted_predicted_IOKR</span><span class="p">(</span><span class="s1">&#39;Xt&#39;</span><span class="p">,</span> <span class="n">yt</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span> <span class="p">)</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="ne">AssertionError</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="n">msg</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;X must be a Numpy array&quot;</span>
+        <span class="c1"># Test that it handles the case of: y is a string</span>
+        <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+            <span class="n">Xt</span><span class="p">,</span> <span class="n">yt</span> <span class="o">=</span> <span class="n">DATASETS</span><span class="p">[</span><span class="s1">&#39;bibtex&#39;</span><span class="p">][</span><span class="s1">&#39;X&#39;</span><span class="p">],</span> <span class="n">DATASETS</span><span class="p">[</span><span class="s1">&#39;bibtex&#39;</span><span class="p">][</span><span class="s1">&#39;Y&#39;</span><span class="p">]</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">fitted_predicted_IOKR</span><span class="p">(</span><span class="n">Xt</span><span class="p">,</span> <span class="s1">&#39;yt&#39;</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span> <span class="p">)</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="ne">AssertionError</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="n">msg</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;y must be a Numpy array&quot;</span></div>
+
+<div class="viewcode-block" id="TestPredict.test_time"><a class="viewcode-back" href="../../../../IOKR.tests.model.html#IOKR.tests.model.test_model.TestPredict.test_time">[docs]</a>    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;nameSet, dataXY&quot;</span><span class="p">,</span> <span class="n">DATASETS</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;nameTree, Tree&quot;</span><span class="p">,</span> <span class="n">ESTIMATORS</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="k">def</span> <span class="nf">test_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nameTree</span><span class="p">,</span> <span class="n">Tree</span><span class="p">,</span> <span class="n">nameSet</span><span class="p">,</span> <span class="n">dataXY</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span> <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Test the time for predicting</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        nameTree : str</span>
+<span class="sd">            Name of the tree estimator</span>
+<span class="sd">        Tree : estimator</span>
+<span class="sd">            estimator to check</span>
+<span class="sd">        nameSet : str</span>
+<span class="sd">            Name of the dataset</span>
+<span class="sd">        dataXY : tuple of arrays</span>
+<span class="sd">            Containing X and y from the dataset</span>
+<span class="sd">        L:</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">,</span> <span class="n">Y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">dataXY</span><span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">],</span> <span class="n">dataXY</span><span class="p">[</span><span class="s2">&quot;Y&quot;</span><span class="p">],</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.33</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+        <span class="n">clf</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">()</span>
+        <span class="n">clf</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X_train</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="n">Y_train</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span><span class="n">L</span><span class="p">,</span> <span class="p">)</span>
+        <span class="n">test_t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">Y_pred_test</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="o">=</span><span class="n">X_test</span><span class="p">,</span> <span class="n">Y_candidates</span><span class="o">=</span><span class="n">Y_train</span><span class="p">)</span>
+        <span class="n">test_pred_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">test_t0</span>
+        <span class="k">assert</span> <span class="n">test_pred_time</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Failed with </span><span class="si">{</span><span class="n">nameTree</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">nameSet</span><span class="si">}</span><span class="s1">:&quot;test_pred_time&quot; is over 100 seconds&#39;</span></div>
+
+<div class="viewcode-block" id="TestPredict.test_recall"><a class="viewcode-back" href="../../../../IOKR.tests.model.html#IOKR.tests.model.test_model.TestPredict.test_recall">[docs]</a>    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;nameSet, dataXY&quot;</span><span class="p">,</span> <span class="n">DATASETS</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;nameTree, Tree&quot;</span><span class="p">,</span> <span class="n">ESTIMATORS</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="k">def</span> <span class="nf">test_recall</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nameTree</span><span class="p">,</span> <span class="n">Tree</span><span class="p">,</span> <span class="n">nameSet</span><span class="p">,</span> <span class="n">dataXY</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Test the recall score</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        nameTree : str</span>
+<span class="sd">            Name of the tree estimator</span>
+<span class="sd">        Tree : estimator</span>
+<span class="sd">            estimator to check</span>
+<span class="sd">        nameSet : str</span>
+<span class="sd">            Name of the dataset</span>
+<span class="sd">        dataXY : tuple of arrays</span>
+<span class="sd">            Containing X and y from the dataset</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fp_IOKR</span> <span class="o">=</span> <span class="n">fitted_predicted_IOKR</span><span class="p">(</span><span class="n">dataXY</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">],</span> <span class="n">dataXY</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">],</span> <span class="n">L</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span> <span class="p">)</span>
+        <span class="n">recall_test</span> <span class="o">=</span> <span class="n">recall_score</span><span class="p">(</span><span class="n">fp_IOKR</span><span class="p">[</span><span class="s1">&#39;Y_test&#39;</span><span class="p">],</span> <span class="n">fp_IOKR</span><span class="p">[</span><span class="s1">&#39;Y_pred_test&#39;</span><span class="p">],</span><span class="n">average</span><span class="o">=</span><span class="s1">&#39;micro&#39;</span><span class="p">)</span>
+        <span class="n">threshold</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">assert</span> <span class="n">recall_test</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Failed with </span><span class="si">{</span><span class="n">nameTree</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">nameSet</span><span class="si">}</span><span class="s1">: recall_test = </span><span class="si">{</span><span class="n">recall_test</span><span class="si">}</span><span class="s1">,&#39;</span> \
+                                        <span class="sa">f</span><span class="s1">&#39;but threshold set to </span><span class="si">{</span><span class="n">threshold</span><span class="si">}</span><span class="s1">&#39;</span></div>
+
+<div class="viewcode-block" id="TestPredict.test_precision"><a class="viewcode-back" href="../../../../IOKR.tests.model.html#IOKR.tests.model.test_model.TestPredict.test_precision">[docs]</a>    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;nameSet, dataXY&quot;</span><span class="p">,</span> <span class="n">DATASETS</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;nameTree, Tree&quot;</span><span class="p">,</span> <span class="n">ESTIMATORS</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="k">def</span> <span class="nf">test_precision</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nameTree</span><span class="p">,</span> <span class="n">Tree</span><span class="p">,</span> <span class="n">nameSet</span><span class="p">,</span> <span class="n">dataXY</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Tests the precision score</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        nameTree : str</span>
+<span class="sd">            Name of the tree estimator</span>
+<span class="sd">        Tree : estimator</span>
+<span class="sd">            estimator to check</span>
+<span class="sd">        nameSet : str</span>
+<span class="sd">            Name of the dataset</span>
+<span class="sd">        dataXY : tuple of arrays</span>
+<span class="sd">            Containing X and y from the dataset</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fp_IOKR</span> <span class="o">=</span> <span class="n">fitted_predicted_IOKR</span><span class="p">(</span><span class="n">dataXY</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">],</span> <span class="n">dataXY</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">],</span> <span class="n">L</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span> <span class="p">)</span>
+        <span class="n">precision_test</span> <span class="o">=</span> <span class="n">precision_score</span><span class="p">(</span><span class="n">fp_IOKR</span><span class="p">[</span><span class="s1">&#39;Y_test&#39;</span><span class="p">],</span> <span class="n">fp_IOKR</span><span class="p">[</span><span class="s1">&#39;Y_pred_test&#39;</span><span class="p">],</span><span class="n">average</span><span class="o">=</span><span class="s1">&#39;micro&#39;</span><span class="p">)</span>
+        <span class="n">threshold</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">assert</span> <span class="n">precision_test</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Failed with </span><span class="si">{</span><span class="n">nameTree</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">nameSet</span><span class="si">}</span><span class="s1">: precision_test = </span><span class="si">{</span><span class="n">precision_test</span><span class="si">}</span><span class="s1">,&#39;</span> \
+                                           <span class="sa">f</span><span class="s1">&#39;but threshold set to </span><span class="si">{</span><span class="n">threshold</span><span class="si">}</span><span class="s1">&#39;</span></div>
+
+<div class="viewcode-block" id="TestPredict.test_f1_score"><a class="viewcode-back" href="../../../../IOKR.tests.model.html#IOKR.tests.model.test_model.TestPredict.test_f1_score">[docs]</a>    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;nameSet, dataXY&quot;</span><span class="p">,</span> <span class="n">DATASETS</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;nameTree, Tree&quot;</span><span class="p">,</span> <span class="n">ESTIMATORS</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="k">def</span> <span class="nf">test_f1_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nameTree</span><span class="p">,</span> <span class="n">Tree</span><span class="p">,</span> <span class="n">nameSet</span><span class="p">,</span> <span class="n">dataXY</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Tests the F1_score</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        nameTree : str</span>
+<span class="sd">            Name of the tree estimator</span>
+<span class="sd">        Tree : estimator</span>
+<span class="sd">            estimator to check</span>
+<span class="sd">        nameSet : str</span>
+<span class="sd">            Name of the dataset</span>
+<span class="sd">        dataXY : tuple of arrays</span>
+<span class="sd">            Containing X and y from the dataset</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fp_IOKR</span> <span class="o">=</span> <span class="n">fitted_predicted_IOKR</span><span class="p">(</span><span class="n">dataXY</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">],</span> <span class="n">dataXY</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">],</span> <span class="n">L</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span> <span class="p">)</span>
+        <span class="n">f1_test</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">fp_IOKR</span><span class="p">[</span><span class="s1">&#39;Y_pred_test&#39;</span><span class="p">],</span> <span class="n">fp_IOKR</span><span class="p">[</span><span class="s1">&#39;Y_test&#39;</span><span class="p">],</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;samples&#39;</span><span class="p">)</span>
+        <span class="n">threshold</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># Check f1 score range</span>
+        <span class="k">assert</span> <span class="mf">1.0</span> <span class="o">&gt;=</span> <span class="n">f1_test</span> <span class="o">&gt;=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Failed with </span><span class="si">{</span><span class="n">nameTree</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">nameSet</span><span class="si">}</span><span class="s2">: f1 score is of </span><span class="si">{</span><span class="n">f1_test</span><span class="si">}</span><span class="s2">, should be between 0 and 1&quot;</span>
+        <span class="c1"># assert f1 score is enough</span>
+        <span class="k">assert</span> <span class="n">f1_test</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Failed with </span><span class="si">{</span><span class="n">nameTree</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">nameSet</span><span class="si">}</span><span class="s1">: f1_test = </span><span class="si">{</span><span class="n">f1_test</span><span class="si">}</span><span class="s1">, but threshold set to </span><span class="si">{</span><span class="n">threshold</span><span class="si">}</span><span class="s1">&#39;</span></div>
+
+<div class="viewcode-block" id="TestPredict.test_accuracy_score"><a class="viewcode-back" href="../../../../IOKR.tests.model.html#IOKR.tests.model.test_model.TestPredict.test_accuracy_score">[docs]</a>    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;nameSet, dataXY&quot;</span><span class="p">,</span> <span class="n">DATASETS</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;nameTree, Tree&quot;</span><span class="p">,</span> <span class="n">ESTIMATORS</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="k">def</span> <span class="nf">test_accuracy_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nameTree</span><span class="p">,</span> <span class="n">Tree</span><span class="p">,</span> <span class="n">nameSet</span><span class="p">,</span> <span class="n">dataXY</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check accuracy of the model</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        nameTree : str</span>
+<span class="sd">            Name of the tree estimator</span>
+<span class="sd">        Tree : estimator</span>
+<span class="sd">            estimator to check</span>
+<span class="sd">        nameSet : str</span>
+<span class="sd">            Name of the dataset</span>
+<span class="sd">        dataXY : tuple of arrays</span>
+<span class="sd">            Containing X and y from the dataset</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fp_IOKR</span> <span class="o">=</span> <span class="n">fitted_predicted_IOKR</span><span class="p">(</span><span class="n">dataXY</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">],</span> <span class="n">dataXY</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">],</span> <span class="n">L</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span> <span class="p">)</span>
+        <span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">fp_IOKR</span><span class="p">[</span><span class="s1">&#39;Y_test&#39;</span><span class="p">],</span> <span class="n">fp_IOKR</span><span class="p">[</span><span class="s1">&#39;Y_pred_test&#39;</span><span class="p">])</span>
+        <span class="n">threshold</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">assert</span> <span class="n">accuracy</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Failed with </span><span class="si">{</span><span class="n">nameTree</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">nameSet</span><span class="si">}</span><span class="s1">: accuracy = </span><span class="si">{</span><span class="n">accuracy</span><span class="si">}</span><span class="s1">, but threshold set to </span><span class="si">{</span><span class="n">threshold</span><span class="si">}</span><span class="s1">&#39;</span></div>
+
+<div class="viewcode-block" id="TestPredict.test_mse"><a class="viewcode-back" href="../../../../IOKR.tests.model.html#IOKR.tests.model.test_model.TestPredict.test_mse">[docs]</a>    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;nameSet, dataXY&quot;</span><span class="p">,</span> <span class="n">DATASETS</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;nameTree, Tree&quot;</span><span class="p">,</span> <span class="n">ESTIMATORS</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="k">def</span> <span class="nf">test_mse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nameTree</span><span class="p">,</span> <span class="n">Tree</span><span class="p">,</span> <span class="n">nameSet</span><span class="p">,</span> <span class="n">dataXY</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Checks the MSE score of the model</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        nameTree : str</span>
+<span class="sd">            Name of the tree estimator</span>
+<span class="sd">        Tree : estimator</span>
+<span class="sd">            estimator to check</span>
+<span class="sd">        nameSet : str</span>
+<span class="sd">            Name of the dataset</span>
+<span class="sd">        dataXY : tuple of arrays</span>
+<span class="sd">            Containing X and y from the dataset</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fp_IOKR</span> <span class="o">=</span> <span class="n">fitted_predicted_IOKR</span><span class="p">(</span><span class="n">dataXY</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">],</span> <span class="n">dataXY</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">],</span> <span class="n">L</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span> <span class="p">)</span>
+        <span class="n">test_mse</span> <span class="o">=</span> <span class="n">MSE</span><span class="p">(</span><span class="n">fp_IOKR</span><span class="p">[</span><span class="s1">&#39;Y_test&#39;</span><span class="p">],</span> <span class="n">fp_IOKR</span><span class="p">[</span><span class="s1">&#39;Y_pred_test&#39;</span><span class="p">])</span>
+        <span class="n">threshold</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">assert</span> <span class="n">test_mse</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Failed with </span><span class="si">{</span><span class="n">nameTree</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">nameSet</span><span class="si">}</span><span class="s1">: mse = </span><span class="si">{</span><span class="n">test_mse</span><span class="si">}</span><span class="s1">, but threshold set to </span><span class="si">{</span><span class="n">threshold</span><span class="si">}</span><span class="s1"> &#39;</span></div></div>
+
+
+<div class="viewcode-block" id="TestAlpha"><a class="viewcode-back" href="../../../../IOKR.tests.model.html#IOKR.tests.model.test_model.TestAlpha">[docs]</a><span class="k">class</span> <span class="nc">TestAlpha</span><span class="p">:</span>
+
+<div class="viewcode-block" id="TestAlpha.test_alpha_returns"><a class="viewcode-back" href="../../../../IOKR.tests.model.html#IOKR.tests.model.test_model.TestAlpha.test_alpha_returns">[docs]</a>    <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;nameSet, dataXY&quot;</span><span class="p">,</span> <span class="n">DATASETS</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+    <span class="k">def</span> <span class="nf">test_alpha_returns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nameSet</span><span class="p">,</span> <span class="n">dataXY</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Tests if the function returns what it should</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        nameSet : str</span>
+<span class="sd">            Name of the dataset</span>
+<span class="sd">        dataXY : tuple of arrays</span>
+<span class="sd">            Containing X and y from the dataset</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.33</span>
+        <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">,</span> <span class="n">Y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">DATASETS</span><span class="p">[</span><span class="s1">&#39;bibtex&#39;</span><span class="p">][</span><span class="s1">&#39;X&#39;</span><span class="p">],</span> <span class="n">DATASETS</span><span class="p">[</span><span class="s1">&#39;bibtex&#39;</span><span class="p">][</span><span class="s1">&#39;Y&#39;</span><span class="p">],</span>
+                                                            <span class="n">test_size</span><span class="o">=</span><span class="n">test_size</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+        <span class="n">clf</span> <span class="o">=</span> <span class="n">iokr</span><span class="p">()</span>
+        <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">,</span> <span class="n">L</span><span class="o">=</span> <span class="mf">1e-5</span><span class="p">)</span>
+        <span class="n">Y_pred_test</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="o">=</span><span class="n">X_test</span><span class="p">,</span> <span class="n">Y_candidates</span><span class="o">=</span><span class="n">Y_test</span><span class="p">)</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">alpha</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">A</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;A is None&quot;</span>
+        <span class="k">assert</span> <span class="n">A</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;A is empty&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Failed with </span><span class="si">{</span><span class="n">nameSet</span><span class="si">}</span><span class="s2">: A should be &#39;np.ndarray&#39;, but is </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span></div></div>
+
+<span class="c1"># To confirm</span>
+<span class="c1"># def test_sklearn_check_estimator():</span>
+<span class="c1">#    &quot;&quot;&quot;test with check_estimator from sklearn&quot;&quot;&quot;</span>
+<span class="c1">#    check_estimator(iokr())</span>
+
+<span class="c1"># To confirm</span>
+<span class="c1"># def test_sklearn_check_estimator():</span>
+<span class="c1">#    &quot;&quot;&quot;test with check_estimator from sklearn&quot;&quot;&quot;</span>
+<span class="c1">#    check_estimator(iokr())</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../index.html">IOKR</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">IOKR</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Florence, Luc, Tamim, Gaëtan, Danaël, Awais.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.4.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

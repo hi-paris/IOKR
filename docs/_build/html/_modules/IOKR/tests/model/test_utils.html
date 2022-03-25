@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IOKR.tests.model.test_utils &#8212; IOKR  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/alabaster.css" />
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for IOKR.tests.model.test_utils</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Test module for model/utils.py&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">listdir</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">isdir</span><span class="p">,</span> <span class="n">isfile</span><span class="p">,</span> <span class="n">dirname</span><span class="p">,</span> <span class="n">join</span>
+<span class="kn">from</span> <span class="nn">IOKR.model.utils</span> <span class="kn">import</span> <span class="n">SGD</span><span class="p">,</span> <span class="n">MyDataset</span><span class="p">,</span> <span class="n">create_path_that_doesnt_exist</span><span class="p">,</span> <span class="n">project_root</span>
+
+
+<div class="viewcode-block" id="TestCreatePathThatDoesntExist"><a class="viewcode-back" href="../../../../IOKR.tests.model.html#IOKR.tests.model.test_utils.TestCreatePathThatDoesntExist">[docs]</a><span class="k">class</span> <span class="nc">TestCreatePathThatDoesntExist</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Test class for create_path_that_doesnt_exist function&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TestCreatePathThatDoesntExist.test_path_dir_is_created"><a class="viewcode-back" href="../../../../IOKR.tests.model.html#IOKR.tests.model.test_utils.TestCreatePathThatDoesntExist.test_path_dir_is_created">[docs]</a>    <span class="k">def</span> <span class="nf">test_path_dir_is_created</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tmp_path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;test to check if the path dir is created&quot;&quot;&quot;</span>
+        <span class="n">d1</span> <span class="o">=</span> <span class="n">tmp_path</span> <span class="o">/</span> <span class="s2">&quot;Testdir&quot;</span>
+        <span class="n">f1</span> <span class="o">=</span> <span class="n">d1</span> <span class="o">/</span> <span class="s1">&#39;Check.txt&#39;</span>
+        <span class="k">assert</span> <span class="n">isdir</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">d1</span><span class="si">}</span><span class="s1"> already exist&#39;</span>
+        <span class="n">create_path_that_doesnt_exist</span><span class="p">(</span><span class="n">d1</span><span class="p">,</span> <span class="s2">&quot;Check&quot;</span><span class="p">,</span> <span class="s2">&quot;txt&quot;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">isdir</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">d1</span><span class="si">}</span><span class="s1"> has not been created&#39;</span></div></div>
+
+
+<div class="viewcode-block" id="TestProjectRoot"><a class="viewcode-back" href="../../../../IOKR.tests.model.html#IOKR.tests.model.test_utils.TestProjectRoot">[docs]</a><span class="k">class</span> <span class="nc">TestProjectRoot</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Test class for function project_root&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TestProjectRoot.test_project_root"><a class="viewcode-back" href="../../../../IOKR.tests.model.html#IOKR.tests.model.test_utils.TestProjectRoot.test_project_root">[docs]</a>    <span class="k">def</span> <span class="nf">test_project_root</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Test for project_root function&quot;&quot;&quot;</span>
+        <span class="c1"># Get the actual path</span>
+        <span class="n">actual_path</span> <span class="o">=</span> <span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+        <span class="c1"># Get the supposed root_path to check</span>
+        <span class="n">root_path</span> <span class="o">=</span> <span class="n">dirname</span><span class="p">(</span><span class="n">project_root</span><span class="p">())</span>
+        <span class="c1"># Get the difference in length of both</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">actual_path</span><span class="p">)</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">root_path</span><span class="p">)</span>
+        <span class="n">dif_length</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span>
+        <span class="c1"># Subtract the difference to the actual path</span>
+        <span class="n">root_actual_path</span> <span class="o">=</span> <span class="n">actual_path</span><span class="p">[:</span><span class="o">-</span><span class="n">dif_length</span><span class="p">]</span>
+        <span class="c1"># Assert that the root path from the function is the same as the root of the actual path</span>
+        <span class="k">assert</span> <span class="n">root_actual_path</span> <span class="o">==</span> <span class="n">root_path</span><span class="p">,</span> \
+            <span class="sa">f</span><span class="s1">&#39;Root_path should be </span><span class="si">{</span><span class="n">root_path</span><span class="si">}</span><span class="s1">, but instead returned </span><span class="si">{</span><span class="n">root_actual_path</span><span class="si">}</span><span class="s1">&#39;</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../index.html">IOKR</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">IOKR</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Florence, Luc, Tamim, Gaëtan, Danaël, Awais.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.4.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
