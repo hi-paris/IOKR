@@ -18,6 +18,9 @@ setup(
     version="0.1.0",
     url="https://github.com/realpython/reader",
     license="MIT",
+    packages=find_packages(exclude=("tests",)),
+    include_package_data=True,
+    test_suite='nose.collector',
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
