@@ -2,3 +2,5 @@ pandas
 numpy
 scipy
 scikit-learn
+arff2pandas
+liac-arff
