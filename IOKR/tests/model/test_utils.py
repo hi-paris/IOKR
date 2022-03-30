@@ -1,9 +1,8 @@
 """Test module for model/utils.py"""
 
-import pytest
-from os import listdir
-from os.path import isdir, isfile, dirname, join
-from IOKR.model.utils import SGD, MyDataset, create_path_that_doesnt_exist, project_root
+
+from os.path import isdir, dirname
+from IOKR.model.utils import create_path_that_doesnt_exist, project_root
 
 
 class TestCreatePathThatDoesntExist():
