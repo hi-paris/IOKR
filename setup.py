@@ -19,31 +19,36 @@ setup(
     license="MIT",
     packages=find_packages(exclude=("tests",)),
     include_package_data=True,
-    test_suite='nose.collector',
+    test_suite="nose.collector",
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.7",
     ],
-    install_requires=["pandas","numpy","scipy","scikit-learn"],
-    python_requires=">=2.7"
+    install_requires=["pandas", "numpy", "scipy", "scikit-learn"],
+    python_requires=">=3.7",
 )
 
 
 class CleanCommand(Command):
     """Custom clean command to tidy up the project root."""
+
     user_options = []
+
     def initialize_options(self):
         pass
+
     def finalize_options(self):
         pass
+
     def run(self):
-        os.system('rm -vrf ./build ./dist ./*.pyc ./*.tgz ./*.egg-info')
+        os.system("rm -vrf ./build ./dist ./*.pyc ./*.tgz ./*.egg-info")
+
 
 # Further down when you call setup()
 setup(
     # ... Other setup options
     cmdclass={
-        'clean': CleanCommand,
+        "clean": CleanCommand,
     }
 )
