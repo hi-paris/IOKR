@@ -25,7 +25,7 @@ setup(
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.7",
     ],
-    install_requires=["pandas", "numpy", "scipy", "scikit-learn"],
+    install_requires=["pandas", "numpy", "scipy", "scikit-learn", "arff2pandas", "liac-arff"],
     python_requires=">=3.7",
 )
 
