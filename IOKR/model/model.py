@@ -1,16 +1,10 @@
 # Implementation
 import time
-from sklearn.model_selection import KFold
-from sklearn.metrics.pairwise import linear_kernel, polynomial_kernel, rbf_kernel
-from sklearn.metrics import f1_score
+
 import numpy as np
-import pandas as pd
-from IOKR.data.load_data import load_bibtex
-from sklearn.model_selection import train_test_split
+
+from sklearn.metrics.pairwise import linear_kernel, polynomial_kernel, rbf_kernel
 import arff
-from numpy.linalg import inv
-import os
-from line_profiler import LineProfiler
 
 
 # insert at position 1 in the path, as 0 is the path of this file.

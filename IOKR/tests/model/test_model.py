@@ -3,23 +3,23 @@ Tests for model/model.py
 Documentation in progress 
 """
 
-import pytest
-from IOKR.data.load_data import load_bibtex, load_corel5k
-from IOKR.model.utils import project_root
+import time
 from os.path import join
+
+import numpy as np
+
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import f1_score, recall_score, precision_score, accuracy_score
 from sklearn.metrics import mean_squared_error as MSE
-from sklearn.utils.estimator_checks import check_estimator
 from sklearn.datasets import load_iris
-from sklearn.utils.validation import check_is_fitted, check_X_y
-import numpy as np
+from sklearn.utils.validation import check_is_fitted
 from sklearn.exceptions import NotFittedError
+
 from IOKR.model.model import IOKR as iokr
-import time
-from sklearn.utils._testing import assert_array_equal
-from sklearn.utils._testing import assert_array_almost_equal
-from sklearn.utils._testing import assert_almost_equal
+from IOKR.data.load_data import load_bibtex, load_corel5k
+from IOKR.model.utils import project_root
+
+import pytest
 
 # Estimators to check
 ESTIMATORS = {
@@ -104,6 +104,7 @@ class TestFit:
 
         """Test if fit function actually prints something"""
         scores = fitted_predicted_IOKR(DATASETS['bibtex']['X'], DATASETS['bibtex']['Y'], L=1e-5)
+        assert scores  # XXX
         out, err = capfd.readouterr()
         assert err == "", f'{err}: need to be fixed'
         assert out != "", f'Fitting Time should have been printed '
