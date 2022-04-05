@@ -15,7 +15,7 @@ setup(
     author="Florence d'Alché-Buc (Researcher), Luc Motte (Researcher), Awais Sani (Engineer), Danaël  Schlewer-Becker(Engineer), Gaëtan Brison (Engineer)",
     description="Test package using IOKR method with the long term goal to develop a Structured-Prediction Package",
     name="IOKR-Test",
-    version="0.2.0",
+    version="0.2.1",
     license="MIT",
     packages=find_packages(exclude=("tests",)),
     include_package_data=True,
