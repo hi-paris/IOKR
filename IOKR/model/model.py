@@ -81,12 +81,12 @@ class IOKR:
         self.M = np.linalg.inv(Kx + n * L * np.eye(n))
         if self.verbose > 0:
             print(f'Fitting time: {time.time() - t0} in s')
-            
+
     def alpha(self, X_test):
 
         Kx = self.input_kernel(self.X_train, X_test)
         A = self.M.dot(Kx)
-        
+
         return A
 
 
@@ -128,7 +128,7 @@ class IOKR:
         Y_pred = Y_candidates[idx_pred]
         if self.verbose > 0:
             print(f'Decoding time: {time.time() - t0} in s')
-        
+
         return Y_pred
 
 

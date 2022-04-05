@@ -82,7 +82,9 @@ class TestLoadBibtex():
 #        check = check_X_y(load[0], load[1])
 #        assert check
 
+
 class TestLoadCorel5k():
+
     """Test class for the function: load_corel5k"""
 
     def test_returned_variables_not_empty(self):
