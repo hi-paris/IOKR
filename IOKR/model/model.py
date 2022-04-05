@@ -21,12 +21,6 @@ from line_profiler import LineProfiler
 
 
 
-"""
-Created on December 12, 2021, print("hello") v2
-Created on December 12, 2021, print("hello") v2
-"""
-
-
 class IOKR:
 
     """
