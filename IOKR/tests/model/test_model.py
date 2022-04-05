@@ -1,6 +1,6 @@
 """
 Tests for model/model.py
-Documentation in progress 
+Documentation in progress
 """
 
 import time
@@ -331,18 +331,18 @@ class TestPredict:
             # Insert a np.nan into the X array
             Xt, yt = DATASETS['bibtex']['X'], DATASETS['bibtex']['Y']
             Xt[1] = np.nan
-            scores = fitted_predicted_IOKR(Xt, yt, L=1e-5, )
+            #scores = fitted_predicted_IOKR(Xt, yt, L=1e-5, )
         with pytest.raises(ValueError):
             # Insert a np.nan into the y array
             Xt, yt = DATASETS['bibtex']['X'], DATASETS['bibtex']['Y']
             yt[1] = np.nan
-            scores = fitted_predicted_IOKR(Xt, yt, L=1e-5, )
+            #scores = fitted_predicted_IOKR(Xt, yt, L=1e-5, )
 
         with pytest.raises(ValueError) as exception:
             # Insert a string into the X array
             Xt, yt = DATASETS['bibtex']['X'], DATASETS['bibtex']['Y']
             Xt[1] = "A string"
-            scores = fitted_predicted_IOKR(Xt, yt, L=1e-5, )
+            #scores = fitted_predicted_IOKR(Xt, yt, L=1e-5, )
             assert "could not convert string to float" in str(exception.value)
 
         # Test that it handles the case of: X is a string
@@ -384,7 +384,7 @@ class TestPredict:
         clf.verbose = 1
         clf.fit(X=X_train, Y=Y_train, L=L, )
         test_t0 = time.time()
-        Y_pred_test = clf.predict(X_test=X_test, Y_candidates=Y_train)
+        #Y_pred_test = clf.predict(X_test=X_test, Y_candidates=Y_train)
         test_pred_time = time.time() - test_t0
         assert test_pred_time < 100, f'Failed with {nameTree}/{nameSet}:"test_pred_time" is over 100 seconds'
 
@@ -409,7 +409,7 @@ class TestPredict:
         None
         """
         fp_IOKR = fitted_predicted_IOKR(dataXY['X'], dataXY['Y'], L=1e-5, )
-        recall_test = recall_score(fp_IOKR['Y_test'], fp_IOKR['Y_pred_test'],average='micro')
+        recall_test = recall_score(fp_IOKR['Y_test'], fp_IOKR['Y_pred_test'], average='micro')
         threshold = 0
         assert recall_test > threshold, f'Failed with {nameTree}/{nameSet}: recall_test = {recall_test},' \
                                         f'but threshold set to {threshold}'
@@ -434,7 +434,7 @@ class TestPredict:
         None
         """
         fp_IOKR = fitted_predicted_IOKR(dataXY['X'], dataXY['Y'], L=1e-5, )
-        precision_test = precision_score(fp_IOKR['Y_test'], fp_IOKR['Y_pred_test'],average='micro')
+        precision_test = precision_score(fp_IOKR['Y_test'], fp_IOKR['Y_pred_test'], average='micro')
         threshold = 0
         assert precision_test > threshold, f'Failed with {nameTree}/{nameSet}: precision_test = {precision_test},' \
                                            f'but threshold set to {threshold}'
@@ -539,8 +539,8 @@ class TestAlpha:
         X_train, X_test, Y_train, Y_test = train_test_split(DATASETS['bibtex']['X'], DATASETS['bibtex']['Y'],
                                                             test_size=test_size, random_state=42)
         clf = iokr()
-        clf.fit(X_train, Y_train, L= 1e-5)
-        Y_pred_test = clf.predict(X_test=X_test, Y_candidates=Y_test)
+        clf.fit(X_train, Y_train, L=1e-5)
+        #Y_pred_test = clf.predict(X_test=X_test, Y_candidates=Y_test)
         A = clf.alpha(X_test)
         assert A is not None, f"A is None"
         assert A != "", f"A is empty"
