@@ -22,10 +22,9 @@ setup(
     test_suite="nose.collector",
     classifiers=[
         "License :: OSI Approved :: MIT License",
-        "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.7",
     ],
-    install_requires=["pandas", "numpy", "scipy", "scikit-learn"],
+    install_requires=["pandas", "numpy", "scipy", "scikit-learn","arff2pandas","liac-arff"],
     python_requires=">=3.7",
 )
 
