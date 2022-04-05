@@ -15,11 +15,6 @@ import arff
 
 
 
-"""
-Created on December 12, 2021, print("hello")
-"""
-
-
 class IOKR:
 
     """
