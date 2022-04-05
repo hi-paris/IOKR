@@ -12,7 +12,8 @@ README = (HERE / "README.md").read_text()
 
 # Call setup function
 setup(
-    author="Florence d'Alché-Buc (Researcher), Luc Motte (Researcher), Awais Sani (Engineer), Danaël  Schlewer-Becker(Engineer), Gaëtan Brison (Engineer)",
+    author=("Florence d'Alché-Buc (Researcher), Luc Motte (Researcher), Awais Sani (Engineer), "
+            "Danaël  Schlewer-Becker(Engineer), Gaëtan Brison (Engineer)"),
     description="Test package using IOKR method with the long term goal to develop a Structured-Prediction Package",
     name="IOKR-Test",
     version="0.2.1",

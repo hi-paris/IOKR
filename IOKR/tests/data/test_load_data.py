@@ -1,10 +1,8 @@
 """Test module for the module: load_data.py"""
 
-import pytest
 import numpy as np
 from IOKR.data.load_data import load_bibtex
 from IOKR.data.load_data import load_corel5k
-from sklearn.utils import check_X_y
 
 
 class TestLoadBibtex():

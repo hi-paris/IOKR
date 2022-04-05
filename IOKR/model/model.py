@@ -4,15 +4,6 @@ import time
 import numpy as np
 
 from sklearn.metrics.pairwise import linear_kernel, polynomial_kernel, rbf_kernel
-import arff
-
-
-# insert at position 1 in the path, as 0 is the path of this file.
-
-#dir_path = os.path.dirname("/Users/gaetanbrison/Documents/GitHub/IOKR/IOKR/data/bibtex")
-#dir_path = os.path.dirname(os.path.realpath(__file__))
-#dataset = arff.load(open('/Users/gaetanbrison/Documents/GitHub/IOKR/IOKR/data/bibtex/bibtex.arff'), "r")
-
 
 
 class IOKR:
@@ -21,7 +12,6 @@ class IOKR:
     Class used to apply Input and Output Kernel Regression
     """
 
-#    @profile
     def __init__(self):
         """
         Initialization of the below parameters.
@@ -44,8 +34,8 @@ class IOKR:
         self.input_kernel = None
         self.output_kernel = None
 
-#    @profile
-    def fit(self, X, Y, L, input_kernel='linear', input_kernel_param=None):
+    #    @profile
+    def fit(self, X, Y, L, input_kernel="linear", input_kernel_param=None):
         """
         Model Fitting
 
@@ -56,18 +46,23 @@ class IOKR:
 
         # instantiate input kernel parameter when not given
         if input_kernel_param is None:
-            if input_kernel == 'rbf':
-                input_kernel_param = 1.
-            elif input_kernel == 'polynomial':
+            if input_kernel == "rbf":
+                input_kernel_param = 1.0
+            elif input_kernel == "polynomial":
                 input_kernel_param = [3, None, 1]
 
         # define input kernel
-        if input_kernel == 'linear':
+        if input_kernel == "linear":
             self.input_kernel = lambda A, B: linear_kernel(A, B)
-        elif input_kernel == 'polynomial':
-            self.input_kernel = lambda A, B: polynomial_kernel(A, B, degree=input_kernel_param[0],
-                                                               gamma=input_kernel_param[1], coef0=input_kernel_param[2])
-        elif input_kernel == 'rbf':
+        elif input_kernel == "polynomial":
+            self.input_kernel = lambda A, B: polynomial_kernel(
+                A,
+                B,
+                degree=input_kernel_param[0],
+                gamma=input_kernel_param[1],
+                coef0=input_kernel_param[2],
+            )
+        elif input_kernel == "rbf":
             self.input_kernel = lambda A, B: rbf_kernel(A, B, gamma=input_kernel_param)
         else:
             self.input_kernel = input_kernel
@@ -80,7 +75,7 @@ class IOKR:
         n = Kx.shape[0]
         self.M = np.linalg.inv(Kx + n * L * np.eye(n))
         if self.verbose > 0:
-            print(f'Fitting time: {time.time() - t0} in s')
+            print(f"Fitting time: {time.time() - t0} in s")
 
     def alpha(self, X_test):
 
@@ -89,9 +84,10 @@ class IOKR:
 
         return A
 
-
-#    @profile
-    def predict(self, X_test, Y_candidates, output_kernel='linear', output_kernel_param=None):
+    #    @profile
+    def predict(
+        self, X_test, Y_candidates, output_kernel="linear", output_kernel_param=None
+    ):
 
         """
         Model Prediction
@@ -100,20 +96,26 @@ class IOKR:
 
         # instantiate output kernel parameter when not given
         if output_kernel_param is None:
-            if output_kernel == 'rbf':
-                output_kernel_param = 1.
-            elif output_kernel == 'polynomial':
+            if output_kernel == "rbf":
+                output_kernel_param = 1.0
+            elif output_kernel == "polynomial":
                 output_kernel_param = [3, None, 1]
 
         # define output kernel
-        if output_kernel == 'linear':
+        if output_kernel == "linear":
             self.output_kernel = lambda A, B: linear_kernel(A, B)
-        elif output_kernel == 'polynomial':
-            self.output_kernel = lambda A, B: polynomial_kernel(A, B, degree=output_kernel_param[0],
-                                                                gamma=output_kernel_param[1],
-                                                                coef0=output_kernel_param[2])
-        elif output_kernel == 'rbf':
-            self.output_kernel = lambda A, B: rbf_kernel(A, B, gamma=output_kernel_param)
+        elif output_kernel == "polynomial":
+            self.output_kernel = lambda A, B: polynomial_kernel(
+                A,
+                B,
+                degree=output_kernel_param[0],
+                gamma=output_kernel_param[1],
+                coef0=output_kernel_param[2],
+            )
+        elif output_kernel == "rbf":
+            self.output_kernel = lambda A, B: rbf_kernel(
+                A, B, gamma=output_kernel_param
+            )
         else:
             self.output_kernel = output_kernel
 
@@ -127,12 +129,12 @@ class IOKR:
         idx_pred = np.argmax(scores, axis=0)
         Y_pred = Y_candidates[idx_pred]
         if self.verbose > 0:
-            print(f'Decoding time: {time.time() - t0} in s')
+            print(f"Decoding time: {time.time() - t0} in s")
 
         return Y_pred
 
 
-#### Example v1 Debugging
+# ### Example v1 Debugging
 
 
 # path = "/Users/gaetanbrison/Documents/GitHub/IOKR/IOKR/data/bibtex"
@@ -153,14 +155,14 @@ class IOKR:
 # print(f'Train f1 score: {f1_train} / Test f1 score {f1_test}')
 
 
-#### Example v2 Debugging
+# ### Example v2 Debugging
 
 
-#from IOKR.model.model import IOKR
-#from sklearn.model_selection import train_test_split
-#from IOKR.data.load_data import load_bibtex
-#from sklearn.metrics import f1_score
-'''
+# from IOKR.model.model import IOKR
+# from sklearn.model_selection import train_test_split
+# from IOKR.data.load_data import load_bibtex
+# from sklearn.metrics import f1_score
+"""
 path = "IOKR/data/bibtex"
 X, Y, _, _ = load_bibtex(path)
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.33, random_state=42)
@@ -174,4 +176,4 @@ clf.fit(X=X_train, Y=Y_train, L=L)
 Y_pred_test = clf.predict(X_test=X_test, Y_candidates=Y_test)
 f1_test = f1_score(Y_pred_test, Y_test, average='samples')
 print( "Test f1 score:", f1_test)
-'''
+"""
