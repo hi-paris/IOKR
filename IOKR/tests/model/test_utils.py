@@ -11,7 +11,7 @@ class TestCreatePathThatDoesntExist():
     def test_path_dir_is_created(self, tmp_path):
         """test to check if the path dir is created"""
         d1 = tmp_path / "Testdir"
-        #f1 = d1 / 'Check.txt'
+        # f1 = d1 / 'Check.txt'
         assert isdir(d1) is False, f'{d1} already exist'
         create_path_that_doesnt_exist(d1, "Check", "txt")
         assert isdir(d1) is True, f'{d1} has not been created'
